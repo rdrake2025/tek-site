@@ -14,8 +14,8 @@ window.TEK = {
   launchISO: "2026-09-18T16:00:00Z",                     // e.g. "2026-10-01T16:00:00Z"; counts down before launch, uptime after
 
   links: {
-    x: "",                           // https://x.com/yourhandle
-    telegram: "",                    // https://t.me/yourgroup
+    x: "https://x.com/letspettek",                           // https://x.com/yourhandle
+    telegram: "https://t.me/letspettek",                    // https://t.me/yourgroup
     stickers: "",                    // https://t.me/addstickers/yourpack
     store: "https://gimmiepets.com",
     pumpfun: "",                     // optional; derived from contract if empty
