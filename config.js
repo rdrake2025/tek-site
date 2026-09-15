@@ -10,8 +10,8 @@
    ===================================================================== */
 window.TEK = {
   ticker: "$PETTEK",
-  contract: "",                      // mint address; set on launch day
-  launchISO: "2026-09-18T16:00:00Z",                     // e.g. "2026-10-01T16:00:00Z"; counts down before launch, uptime after
+  contract: "H4paPT3GFKiyhbeXVxim8AHSji9zJdoQRYpw4yVipump",                      // mint address; set on launch day
+  launchISO: "2026-09-15T20:59:38Z",                     // e.g. "2026-10-01T16:00:00Z"; counts down before launch, uptime after
 
   links: {
     x: "https://x.com/letspettek",                           // https://x.com/yourhandle
@@ -24,9 +24,9 @@ window.TEK = {
   },
 
   wallets: {
-    dev: "",                         // deployer / dev-buy wallet
-    devLockUrl: "",                  // lock link, or "unlocked" for a disclosed unlocked buy, or "none" for no dev buy
-    devBuyNote: "",                  // e.g. "$50 of SOL at creation, about 1.8% of supply. One wallet, one transaction."
+    dev: "2JwTzSfAhEmMn1ahVctHYGAZdbe4V1SAzyMSyGZPrAfU",                         // deployer / dev-buy wallet
+    devLockUrl: "unlocked",                  // lock link, or "unlocked" for a disclosed unlocked buy, or "none" for no dev buy
+    devBuyNote: "About 13.9M PETTEK bought at creation, 1.4% of supply. One wallet, one transaction.",                  // e.g. "$50 of SOL at creation, about 1.8% of supply. One wallet, one transaction."
     creatorFees: "",                 // wallet receiving pump.fun creator fees
   },
 
