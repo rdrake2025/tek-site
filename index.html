@@ -632,16 +632,23 @@ tickChip();
 setInterval(() => { tickClock(); tickChip(); }, 20000);
 
 /* ---------- checks ---------- */
+// devLockUrl: "none" means there was no dev buy, so there is nothing to lock and the
+// row says so instead of sitting on a pending state forever.
+const noDevBuy = String(CFG.wallets.devLockUrl || "").toLowerCase() === "none";
 const CHECKS = [
   { name: "Mint authority", text: "Nobody can print more PETTEK.", link: links.solscan, via: "Solscan" },
   { name: "Freeze authority", text: "Nobody can freeze the PETTEK in your wallet.", link: links.rugcheck, via: "RugCheck" },
   { name: "Liquidity", text: "Bonding curve on pump.fun, then a pool on PumpSwap that the protocol holds, not the dev.", link: links.dexscreener, via: "DexScreener" },
-  { name: "Dev buy", text: "Size and transaction posted within minutes of launch.", link: links.dev, via: "Solscan" },
-  { name: "Dev lock", text: "The dev buy is locked on a public schedule anyone can read.", link: links.lock, via: "the lock contract" },
+  noDevBuy
+    ? { name: "Dev buy", text: "There isn't one. The deployer wallet holds no PETTEK, so there is nothing for a dev to dump.", link: links.dev, via: "Solscan" }
+    : { name: "Dev buy", text: "Size and transaction posted within minutes of launch.", link: links.dev, via: "Solscan" },
+  noDevBuy
+    ? null
+    : { name: "Dev lock", text: "The dev buy is locked on a public schedule anyone can read.", link: links.lock, via: "the lock contract" },
   { name: "Creator fees", text: "Trading fees go to a public wallet and get spent on the changelog.", link: links.fees, via: "Solscan" },
   { name: "Holder map", text: "Top wallets and clusters are visible. No hidden bundles.", link: links.bubblemaps, via: "Bubblemaps" },
 ];
-$("#check-list").innerHTML = CHECKS.map((c) => `
+$("#check-list").innerHTML = CHECKS.filter(Boolean).map((c) => `
   <li class="check">
     <span class="led ${c.link ? "on" : "wait"}" aria-hidden="true"></span>
     <div><h3>${c.name}</h3><p>${c.text}</p></div>
