@@ -194,6 +194,7 @@ body {
 .led { width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid var(--ink); }
 .led.on { background: var(--signal); box-shadow: 0 0 8px rgba(67, 212, 108, .7); }
 .led.wait { background: var(--phosphor); }
+.led.info { background: var(--putty-hi); }
 .check p { margin: .15rem 0 0; color: var(--ink-soft); font-size: .98rem; max-width: 44rem; }
 .check .state { font-size: .9rem; font-weight: 650; white-space: nowrap; }
 .check .state a { font-weight: 750; text-underline-offset: 3px; text-decoration-thickness: 2px; }
@@ -530,6 +531,8 @@ const links = {
   dev: BASE58.test(CFG.wallets.dev || "") ? `https://solscan.io/account/${CFG.wallets.dev}` : "",
   lock: CFG.wallets.devLockUrl || "",
   fees: BASE58.test(CFG.wallets.creatorFees || "") ? `https://solscan.io/account/${CFG.wallets.creatorFees}` : "",
+  // pump.fun pays creator fees to the deployer wallet unless you set a separate one
+  feesFromDev: !BASE58.test(CFG.wallets.creatorFees || "") && BASE58.test(CFG.wallets.dev || ""),
 };
 links.buy = links.jupiter || links.pumpfun;
 
@@ -632,28 +635,36 @@ tickChip();
 setInterval(() => { tickClock(); tickChip(); }, 20000);
 
 /* ---------- checks ---------- */
-// devLockUrl: "none" means there was no dev buy, so there is nothing to lock and the
-// row says so instead of sitting on a pending state forever.
-const noDevBuy = String(CFG.wallets.devLockUrl || "").toLowerCase() === "none";
+// devLockUrl states: "" = pending, "none" = there was no dev buy, "unlocked" = a disclosed
+// dev buy that is not locked, or a lock URL. An unlocked buy gets a neutral light, never green:
+// the wallet is checkable, but "not locked" is not a pass.
+const lockState = String(CFG.wallets.devLockUrl || "").toLowerCase();
+const noDevBuy = lockState === "none";
+const devUnlocked = lockState === "unlocked";
+const devBuyText = CFG.wallets.devBuyNote || "Size and transaction posted within minutes of launch.";
 const CHECKS = [
   { name: "Mint authority", text: "Nobody can print more PETTEK.", link: links.solscan, via: "Solscan" },
   { name: "Freeze authority", text: "Nobody can freeze the PETTEK in your wallet.", link: links.rugcheck, via: "RugCheck" },
   { name: "Liquidity", text: "Bonding curve on pump.fun, then a pool on PumpSwap that the protocol holds, not the dev.", link: links.dexscreener, via: "DexScreener" },
   noDevBuy
     ? { name: "Dev buy", text: "There isn't one. The deployer wallet holds no PETTEK, so there is nothing for a dev to dump.", link: links.dev, via: "Solscan" }
-    : { name: "Dev buy", text: "Size and transaction posted within minutes of launch.", link: links.dev, via: "Solscan" },
+    : { name: "Dev buy", text: devBuyText, link: links.dev, via: "Solscan" },
   noDevBuy
     ? null
-    : { name: "Dev lock", text: "The dev buy is locked on a public schedule anyone can read.", link: links.lock, via: "the lock contract" },
-  { name: "Creator fees", text: "Trading fees go to a public wallet and get spent on the changelog.", link: links.fees, via: "Solscan" },
+    : devUnlocked
+      ? { name: "Dev lock", text: "Not locked. The dev buy sits in the public wallet above, so a sale would show up there the moment it happens.", link: links.dev, via: "Solscan", tone: "info", verb: "Watch it" }
+      : { name: "Dev lock", text: "The dev buy is locked on a public schedule anyone can read.", link: links.lock, via: "the lock contract" },
+  links.feesFromDev
+    ? { name: "Creator fees", text: "pump.fun pays creator fees to the deployer wallet, which is public. They get spent on the changelog.", link: links.dev, via: "Solscan" }
+    : { name: "Creator fees", text: "Trading fees go to a public wallet and get spent on the changelog.", link: links.fees, via: "Solscan" },
   { name: "Holder map", text: "Top wallets and clusters are visible. No hidden bundles.", link: links.bubblemaps, via: "Bubblemaps" },
 ];
 $("#check-list").innerHTML = CHECKS.filter(Boolean).map((c) => `
   <li class="check">
-    <span class="led ${c.link ? "on" : "wait"}" aria-hidden="true"></span>
+    <span class="led ${!c.link ? "wait" : c.tone === "info" ? "info" : "on"}" aria-hidden="true"></span>
     <div><h3>${c.name}</h3><p>${c.text}</p></div>
     <span class="state">${c.link
-      ? `<a href="${c.link}" target="_blank" rel="noopener noreferrer">Check it on ${c.via}</a>`
+      ? `<a href="${c.link}" target="_blank" rel="noopener noreferrer">${c.verb || "Check it"} on ${c.via}</a>`
       : "Link posts at launch"}</span>
   </li>`).join("");
 

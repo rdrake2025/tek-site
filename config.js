@@ -25,7 +25,8 @@ window.TEK = {
 
   wallets: {
     dev: "",                         // deployer / dev-buy wallet
-    devLockUrl: "",                  // lock link for the dev buy
+    devLockUrl: "",                  // lock link, or "unlocked" for a disclosed unlocked buy, or "none" for no dev buy
+    devBuyNote: "",                  // e.g. "$50 of SOL at creation, about 1.8% of supply. One wallet, one transaction."
     creatorFees: "",                 // wallet receiving pump.fun creator fees
   },
 
