@@ -62,6 +62,23 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
 .lede { font-size: clamp(1.15rem, 1.8vw, 1.35rem); line-height: 1.45; color: var(--ink-soft); margin-top: 1.5rem; }
 .sub { color: var(--ink-soft); margin-bottom: 2.5rem; }
 
+/* ---------- surface: old beige plastic, not flat paint ---------- */
+body {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+::selection { background: var(--phosphor); color: var(--glass); }
+
+/* ---------- header countdown chip ---------- */
+.chip {
+  display: inline-flex; align-items: center; gap: .45rem; margin-left: auto;
+  font-family: var(--crt); font-size: 1.15rem; line-height: 1;
+  background: var(--glass); color: var(--phosphor);
+  border: 3px solid var(--ink); border-radius: 8px; padding: .3rem .6rem .2rem;
+}
+.chip .led { width: 10px; height: 10px; border-width: 2px; }
+.chip + .key { margin-left: .75rem; }
+@media (max-width: 1000px) { .chip { display: none; } }
+
 /* ---------- header ---------- */
 .top { position: sticky; top: 0; z-index: 10; background: rgba(207, 198, 176, .92); backdrop-filter: blur(8px); border-bottom: 2px solid rgba(43, 42, 38, .22); }
 .top .wrap { display: flex; align-items: center; gap: 1.5rem; min-height: 4.25rem; }
@@ -108,6 +125,18 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
 .unit-button { background: none; border: 0; padding: 0; cursor: pointer; width: 100%; }
 .unit { width: min(100%, 560px); height: auto; margin-inline: auto; }
 .unit-hint { text-align: center; font-size: .9rem; color: var(--ink-soft); margin: .5rem auto 0; }
+
+/* glass behaves like glass everywhere, not just in the big screens */
+.slot-row { position: relative; }
+.slot-row::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 2px, transparent 2px 4px);
+}
+.slot-row button { position: relative; z-index: 1; }
+.check { transition: background .12s; }
+.check:hover { background: rgba(255, 255, 255, .4); }
+.foot a:hover { color: var(--phosphor); }
+.top nav a:focus-visible { outline-offset: 6px; }
 
 /* ---------- screens (dark glass inside the case) ---------- */
 .screen {
@@ -260,6 +289,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
       <a href="#changelog">Changelog</a>
       <a href="#buy">How to buy</a>
     </nav>
+    <span class="chip" id="head-chip" hidden><span class="led on" aria-hidden="true"></span><span id="head-count"></span></span>
     <a class="key key-dark key-small" id="nav-key">Opens at launch</a>
   </div>
 </header>
@@ -270,7 +300,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
   <div class="wrap">
     <div>
       <h1>Sit. Stay. Ship.</h1>
-      <p class="lede">TEK is a robot dog, and $PETTEK is its Solana meme coin with a build log. TEK fetches, ships, and isn't allowed on the rug.</p>
+      <p class="lede">TEK is a robot dog with a build log, and $PETTEK is its coin on Solana. It fetches, it ships, and it isn't allowed on the rug.</p>
 
       <div class="slot">
         <span class="slot-label" id="ca-label">Contract address</span>
@@ -282,7 +312,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
 
       <div class="hero-actions">
         <a class="key key-dark" id="hero-primary">Buying opens at launch</a>
-        <a class="key key-light" href="#screen">Make a TEK meme</a>
+        <a class="key key-light" href="#screen">Make a meme</a>
         <a class="key key-light" id="hero-tg" hidden>Join the Kennel</a>
       </div>
       <p class="clock" id="clock"></p>
@@ -328,9 +358,9 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
         <h3>It is</h3>
         <ul>
           <li>A meme coin with a robot dog and a build log</li>
-          <li>A meme generator anyone can use, free, with no wallet</li>
+          <li>A meme generator anyone can use. Free, no wallet, no sign-up.</li>
           <li>A Telegram bot on the way that checks any Solana coin for rug signals</li>
-          <li>Public wallets, and checks that link to the chain instead of to our word</li>
+          <li>Public wallets, and checks that link to the chain rather than to our word</li>
         </ul>
       </div>
       <div class="dashed">
@@ -448,7 +478,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
     <ol class="steps">
       <li><h3>Get a Solana wallet</h3><p>Phantom, Solflare or Backpack. Write the seed phrase on paper and never type it into a website.</p></li>
       <li><h3>Get some SOL</h3><p>Buy SOL on an exchange and send it to your wallet address.</p></li>
-      <li><h3>Copy the contract</h3><p>Only from this page or the pinned post on TEK's X account. Look-alike coins will copy the name.</p></li>
+      <li><h3>Copy the contract</h3><p>Only from this page or the pinned post on @letspettek. Look-alike coins will copy the name.</p></li>
       <li><h3>Swap for PETTEK</h3><p>On pump.fun while the curve is filling, or on Jupiter after PETTEK graduates.</p></li>
     </ol>
   </div>
@@ -462,7 +492,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
       <span class="badge">PetTek</span>
       <p>PetTek ($PETTEK) is a meme coin. It is not an investment, a share in a company, or a promise that anything will be worth anything. The changelog is a plan, not a guarantee. Nothing on this site is financial advice.</p>
       <p>TEK's story starts in the GimmiePets stockroom, and GimmiePets sells pet gear. Buying PETTEK isn't a purchase from GimmiePets and gives you no rights in the shop.</p>
-      <p>Admins never DM first. The only contract address is the one on this page and in the pinned post on X.</p>
+      <p>Handlers never DM first. The only contract address is the one on this page and in the pinned post on X.</p>
     </div>
     <ul id="socials"></ul>
   </div>
@@ -543,7 +573,7 @@ if (live) {
   setKey($("#hero-primary"), links.buy, links.jupiter ? "Buy on Jupiter" : "Buy on pump.fun");
   setKey($("#nav-key"), links.buy, `Buy ${CFG.ticker}`);
 } else if (CFG.links.x) {
-  setKey($("#hero-primary"), CFG.links.x, "Follow TEK on X");
+  setKey($("#hero-primary"), CFG.links.x, "Follow on X");
   setKey($("#nav-key"), CFG.links.x, "Follow on X");
 } else {
   setKey($("#hero-primary"), "", "Buying opens at launch");
@@ -577,8 +607,29 @@ function tickClock() {
   else if (!live) clockEl.textContent = "Launching now. The contract address appears here the moment the coin exists.";
   else clockEl.textContent = `Uptime: ${span(now - launchAt, false)}.`;
 }
+
+/* ---------- header chip: the countdown, then uptime ---------- */
+const chipEl = $("#head-chip");
+const chipText = $("#head-count");
+function shortSpan(ms) {
+  const mins = Math.max(0, Math.floor(ms / 60000));
+  const d = Math.floor(mins / 1440), h = Math.floor((mins % 1440) / 60), m = mins % 60;
+  if (d) return d + "d " + h + "h";
+  if (h) return h + "h " + m + "m";
+  return m + "m";
+}
+function tickChip() {
+  if (Number.isNaN(launchAt)) { chipEl.hidden = true; return; }
+  const now = Date.now();
+  chipEl.hidden = false;
+  chipText.textContent = launchAt > now
+    ? "T-" + shortSpan(launchAt - now)
+    : live ? "up " + shortSpan(now - launchAt) : "launching";
+}
+
 tickClock();
-setInterval(tickClock, 20000);
+tickChip();
+setInterval(() => { tickClock(); tickChip(); }, 20000);
 
 /* ---------- checks ---------- */
 const CHECKS = [

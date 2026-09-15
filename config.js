@@ -32,7 +32,7 @@ window.TEK = {
   // status: planned | building | shipped | deprecated
   roadmap: [
     { ver: "v0.1", name: "Boot", status: "building", text: "Fair launch on pump.fun. This site, the meme generator and a sticker pack. Every wallet published." },
-    { ver: "v0.2", name: "The Kennel", status: "planned", text: "Telegram opens with handlers and scam protection. First Friday patch notes. First treat bounty." },
+    { ver: "v0.2", name: "The Kennel", status: "building", text: "Telegram opens with handlers and scam protection. First Friday patch notes. First treat bounty." },
     { ver: "v0.5", name: "Graduation", status: "planned", text: "Pool moves to PumpSwap. DexScreener, RugCheck and GeckoTerminal profiles filled in. A second unit joins the pack." },
     { ver: "v1.0", name: "TEK Bot", status: "planned", text: "A Telegram bot that sniffs out rugs: make TEK memes in chat, pull the contract, and check any Solana token." },
     { ver: "v1.5", name: "Meme engine", status: "planned", text: "Animated screens, more stickers and a community gallery." },
