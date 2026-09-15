@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sniff a coin — PetTek</title>
+<meta name="description" content="Paste any Solana coin and TEK sniffs it: mint and freeze authority, who holds it, how deep the pool is, and what that means in plain English. Free, no wallet.">
+<meta property="og:title" content="Sniff a coin — TEK checks any Solana token">
+<meta property="og:description" content="Free rug check: authorities, holder concentration, liquidity and wash-trading signals, in plain English.">
+<meta property="og:image" content="https://tek.gimmiepets.com/og-image.png">
+<meta property="og:url" content="https://tek.gimmiepets.com/sniff/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tek.gimmiepets.com/og-image.png">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root {
+  --putty: #CFC6B0; --putty-hi: #E6DFCD; --putty-lo: #B8AE96; --ink: #2B2A26; --ink-soft: #4E4A42;
+  --glass: #15130E; --phosphor: #FFB547; --signal: #43D46C; --fault: #E4472F;
+  --wide: "Archivo", "Arial Black", Arial, sans-serif; --crt: "VT323", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; background: var(--putty); color: var(--ink); font-family: var(--wide);
+  font-size: 1.0625rem; line-height: 1.55; -webkit-font-smoothing: antialiased;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+::selection { background: var(--phosphor); color: var(--glass); }
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: min(920px, 100% - 2.5rem); margin-inline: auto; }
+.top { border-bottom: 2px solid rgba(43,42,38,.22); background: rgba(207,198,176,.92); position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); }
+.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 4.25rem; }
+.badge { display: inline-grid; place-items: center; padding: .15rem .7rem .2rem; background: var(--putty-hi); border: 3px solid var(--ink); border-radius: 6px; font-weight: 900; font-size: 1.1rem; text-decoration: none; font-variation-settings: "wdth" 125; box-shadow: 0 3px 0 var(--ink); }
+.top nav { margin-left: auto; display: flex; gap: 1.1rem; font-size: .95rem; font-weight: 600; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); font-variation-settings: "wdth" 125; font-weight: 850; line-height: .92; margin: 0 0 .6rem; }
+h2 { font-size: 1.5rem; font-variation-settings: "wdth" 118; font-weight: 820; margin: 2.5rem 0 .8rem; }
+p { margin: 0 0 1rem; max-width: 40rem; }
+.lede { color: var(--ink-soft); font-size: 1.15rem; max-width: 38rem; }
+main { padding-block: clamp(2rem, 5vw, 3.5rem) 4rem; }
+.hunt { display: grid; grid-template-columns: 1fr 200px; gap: 2rem; align-items: center; }
+.unit { width: 100%; height: auto; }
+form { display: flex; gap: .75rem; margin: 1.5rem 0 .5rem; flex-wrap: wrap; }
+input[type=text] { flex: 1; min-width: 16rem; font: inherit; font-family: var(--crt); font-size: 1.3rem; background: var(--glass); color: var(--phosphor); border: 3px solid var(--ink); border-radius: 10px; padding: .55rem .8rem; }
+input::placeholder { color: #8a6a35; }
+.key { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: .7rem 1.25rem; border-radius: 10px; font: inherit; font-weight: 750; font-variation-settings: "wdth" 110; cursor: pointer; border: 3px solid var(--ink); text-decoration: none; }
+.key-dark { background: var(--ink); color: var(--putty-hi); box-shadow: 0 5px 0 #0F0E0C; }
+.key:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+.linky { background: none; border: 0; padding: 0; font: inherit; font-family: var(--crt); font-size: 1.1rem; color: var(--ink); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.hint { font-size: .95rem; color: var(--ink-soft); }
+.headline { border: 3px solid var(--ink); border-radius: 12px; background: var(--putty-hi); padding: 1.2rem 1.4rem; margin-bottom: 1.5rem; }
+.headline strong { font-size: 1.5rem; font-variation-settings: "wdth" 120; }
+.headline .sym { font-family: var(--crt); font-size: 1.4rem; color: var(--ink-soft); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .8rem; margin-top: 1rem; }
+.stat { border-top: 2px solid rgba(43,42,38,.2); padding-top: .5rem; }
+.stat dt { font-size: .85rem; color: var(--ink-soft); }
+.stat dd { margin: .1rem 0 0; font-family: var(--crt); font-size: 1.5rem; }
+ul.findings { list-style: none; margin: 0; padding: 0; border: 3px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--putty-hi); }
+.finding { display: grid; grid-template-columns: auto 1fr; gap: 1rem; padding: .95rem 1.2rem; align-items: start; }
+.finding + .finding { border-top: 2px solid rgba(43,42,38,.18); }
+.dot { width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid var(--ink); margin-top: .35rem; flex: none; }
+.dot.danger { background: var(--fault); }
+.dot.warn { background: var(--phosphor); }
+.dot.ok { background: var(--signal); }
+.dot.info { background: var(--putty); }
+.finding b { font-variation-settings: "wdth" 112; }
+.finding p { margin: .15rem 0 0; color: var(--ink-soft); font-size: .98rem; max-width: 46rem; }
+.sources { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+.sources a { font-size: .9rem; font-weight: 700; border: 2px solid var(--ink); border-radius: 999px; padding: .25rem .8rem; text-decoration: none; background: var(--putty-hi); }
+.screen-note { background: var(--glass); color: var(--phosphor); font-family: var(--crt); font-size: 1.25rem; border: 5px solid #4A463C; outline: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.2rem; }
+.foot { background: var(--ink); color: #D9D1BD; padding-block: 2.5rem; font-size: .95rem; }
+.foot a { color: var(--putty-hi); }
+.foot p { max-width: 46rem; }
+@media (max-width: 720px) { .hunt { grid-template-columns: 1fr; } .unit { width: min(60%, 220px); margin-inline: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="badge" href="../">PetTek</a>
+    <nav>
+      <a href="../#screen">Make a meme</a>
+      <a href="../#checks">PetTek's checks</a>
+      <a href="../">Home</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hunt">
+      <div>
+        <h1>Sniff a coin.</h1>
+        <p class="lede">Paste any Solana token. TEK reads what the chain says about it and explains it in plain English. Free, no wallet, no sign-up.</p>
+      </div>
+      <div><span id="unit-slot"></span></div>
+    </div>
+
+    <form id="sniff-form">
+      <input type="text" id="mint" placeholder="paste a token address" spellcheck="false" autocomplete="off" aria-label="Token address">
+      <button type="submit" class="key key-dark" id="go">Sniff it</button>
+    </form>
+    <p class="hint">Try PetTek itself: <button type="button" id="try-self" class="linky">H4paPT3G…yVipump</button></p>
+
+    <div id="result" hidden></div>
+
+    <div id="explainer">
+      <h2>What this checks</h2>
+      <ul class="findings">
+        <li class="finding"><span class="dot info"></span><div><b>Mint and freeze authority</b><p>Whether anyone can still print more of the coin, or freeze it in your wallet.</p></div></li>
+        <li class="finding"><span class="dot info"></span><div><b>Who holds it</b><p>The biggest wallets, how much of the supply they sit on, and whether the creator still holds a pile.</p></div></li>
+        <li class="finding"><span class="dot info"></span><div><b>The pool</b><p>How much liquidity is actually behind it, and whether the pool tokens are locked or sitting in someone's wallet.</p></div></li>
+        <li class="finding"><span class="dot info"></span><div><b>Volume against liquidity</b><p>Volume many times deeper than the pool usually means the same wallets trading with each other.</p></div></li>
+        <li class="finding"><span class="dot info"></span><div><b>Age</b><p>A coin minutes old has almost nothing to analyse, and this page says so instead of calling it clean.</p></div></li>
+      </ul>
+      <h2>What it can't see</h2>
+      <p>Whether a dev will sell tomorrow. Whether the community is real people or bots. Whether a pile of wallets belongs to one person, unless it is obvious on-chain. A quiet result is not a safe result, and none of this is financial advice.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Built by <a href="../">PetTek</a>, a robot dog with a build log. Data from <a href="https://rugcheck.xyz" target="_blank" rel="noopener noreferrer">RugCheck</a> and <a href="https://dexscreener.com" target="_blank" rel="noopener noreferrer">DexScreener</a>, read live in your browser.</p>
+    <p>Nothing here is financial advice. Meme coins go to zero all the time, this one included. Check everything yourself before you spend anything.</p>
+  </div>
+</footer>
+
+<script src="../tek-render.js"></script>
+<script type="module">
+const SELF = "H4paPT3GFKiyhbeXVxim8AHSji9zJdoQRYpw4yVipump";
+const BASE58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
+const $ = (s) => document.querySelector(s);
+const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const usd = (n) => n == null ? "—" : n >= 1000000 ? "$" + (n / 1000000).toFixed(1) + "M" : n >= 1000 ? "$" + Math.round(n / 1000) + "k" : "$" + Math.round(n);
+const pct = (n) => n == null ? "—" : n.toFixed(1) + "%";
+
+$("#unit-slot").innerHTML = TEKRender.unitMarkup("text", "full", 'id="tek-unit" class="unit" role="img" aria-labelledby="unit-title"');
+const screenEl = $("#tek-unit [data-screen]");
+const setFace = (t) => TEKRender.setScreenText(screenEl, t);
+document.fonts.ready.then(() => setFace(">_"));
+
+function age(ms) {
+  const mins = Math.floor(ms / 60000);
+  if (mins < 60) return mins + " min";
+  const h = Math.floor(mins / 60);
+  if (h < 48) return h + "h";
+  return Math.floor(h / 24) + " days";
+}
+
+async function sniff(mint) {
+  const res = $("#result");
+  res.hidden = false;
+  res.innerHTML = '<div class="screen-note">&gt; sniffing ' + esc(mint.slice(0, 8)) + '... reading the chain</div>';
+  setFace("sniff\nsniff");
+  $("#explainer").hidden = true;
+
+  let report = null, pair = null;
+  const errors = [];
+  try {
+    const r = await fetch("https://api.rugcheck.xyz/v1/tokens/" + mint + "/report");
+    if (r.ok) report = await r.json(); else errors.push("RugCheck answered " + r.status);
+  } catch { errors.push("RugCheck didn't answer"); }
+  try {
+    const d = await fetch("https://api.dexscreener.com/latest/dex/tokens/" + mint);
+    if (d.ok) {
+      const j = await d.json();
+      pair = (j.pairs || []).sort((a, b) => (b.liquidity?.usd || 0) - (a.liquidity?.usd || 0))[0] || null;
+    } else errors.push("DexScreener answered " + d.status);
+  } catch { errors.push("DexScreener didn't answer"); }
+
+  if (!report && !pair) {
+    setFace("404");
+    res.innerHTML = '<div class="screen-note">&gt; nothing found for that address.<br>&gt; ' + esc(errors.join(". ")) + '</div>';
+    return;
+  }
+
+  const f = [];
+  const add = (level, title, text) => f.push({ level, title, text });
+
+  const name = report?.tokenMeta?.name || pair?.baseToken?.name || "Unknown token";
+  const symbol = report?.tokenMeta?.symbol || pair?.baseToken?.symbol || "";
+  const liquidity = pair?.liquidity?.usd ?? report?.totalMarketLiquidity ?? null;
+  const vol24 = pair?.volume?.h24 ?? null;
+  const createdAt = pair?.pairCreatedAt ? Date.now() - pair.pairCreatedAt : null;
+  const holders = report?.totalHolders ?? null;
+
+  if (report) {
+    if (report.rugged) add("danger", "Marked as rugged", "RugCheck has this token flagged as already rugged.");
+    add(report.mintAuthority ? "danger" : "ok", "Mint authority",
+      report.mintAuthority ? "Still active: someone can print more of this coin and dilute you." : "Disabled. Nobody can print more.");
+    add(report.freezeAuthority ? "danger" : "ok", "Freeze authority",
+      report.freezeAuthority ? "Still active: someone can freeze this token in your wallet." : "Disabled. Nobody can freeze your tokens.");
+
+    const supply = report.token?.supply, dec = report.token?.decimals;
+    const creatorPct = (report.creatorBalance != null && supply) ? (report.creatorBalance / supply) * 100 : null;
+    if (creatorPct != null) {
+      add(creatorPct > 10 ? "danger" : creatorPct > 5 ? "warn" : "info", "Creator holds " + pct(creatorPct),
+        creatorPct > 10 ? "A large stake in one hand. If it sells, you feel it."
+          : creatorPct > 5 ? "A noticeable stake in one hand. Watch that wallet."
+          : "A small stake, which is normal. It can still be sold at any time.");
+    }
+    const top = (report.topHolders || []);
+    const top5 = top.slice(0, 5).reduce((s, h) => s + (h.pct || 0), 0);
+    if (top.length) {
+      add(top5 > 50 ? "danger" : top5 > 25 ? "warn" : "info", "Top 5 wallets hold " + pct(top5),
+        "Pools and bonding curves show up in this list too. " + (top5 > 50 ? "This much in few hands means a handful of wallets can move the price alone." : "Check the holder map to see whether those wallets are connected."));
+    }
+    if (report.graphInsidersDetected) {
+      add("warn", report.graphInsidersDetected + " connected wallets detected", "RugCheck thinks this many wallets are linked to each other. Clusters like that are often one person.");
+    }
+    const market = (report.markets || [])[0];
+    const locked = market?.lp?.lpLockedPct;
+    if (locked != null) {
+      add(locked >= 90 ? "ok" : "warn", "Pool tokens locked: " + pct(locked),
+        locked >= 90 ? "Most of the pool is locked or burned, so it can't simply be pulled."
+          : "Pool tokens that aren't locked can be withdrawn by whoever holds them. On a pump.fun curve the protocol holds them, which is normal.");
+    }
+    for (const risk of (report.risks || [])) {
+      const n = (risk.name || "").toLowerCase();
+      if (n.includes("mint authority") || n.includes("freeze authority")) continue;
+      add(risk.level === "danger" ? "danger" : "warn", risk.name || "Flagged by RugCheck", risk.description || "");
+    }
+  }
+
+  if (liquidity != null) {
+    add(liquidity < 5000 ? "danger" : liquidity < 20000 ? "warn" : "info", "Pool depth " + usd(liquidity),
+      liquidity < 5000 ? "Thin. A sell of any size moves the price hard, and getting out can cost more than you expect."
+        : liquidity < 20000 ? "Shallow. Fine for small amounts, painful for large ones."
+        : "Deep enough that normal trades won't move it much.");
+  }
+  if (vol24 != null && liquidity) {
+    const ratio = vol24 / liquidity;
+    if (ratio > 10) add("warn", "Volume is " + ratio.toFixed(0) + "x the pool", "Volume far above pool depth often means the same wallets trading with each other to look busy.");
+  }
+  if (createdAt != null) {
+    add(createdAt < 3600000 ? "warn" : "info", "Age: " + age(createdAt),
+      createdAt < 3600000 ? "Minutes old. There is almost nothing to analyse yet, so a quiet result here means no data, not safety."
+        : "Old enough to have a record you can read.");
+  }
+  if (holders != null) add("info", holders.toLocaleString() + " holders", holders < 50 ? "Very few people hold this." : "");
+  if (errors.length) add("warn", "Couldn't check everything", errors.join(". ") + ". Missing checks count against a coin, never for it.");
+
+  const dangers = f.filter((x) => x.level === "danger").length;
+  const warns = f.filter((x) => x.level === "warn").length;
+  setFace(dangers ? "x_x" : warns ? "-_-" : "^_^");
+
+  const verdict = dangers
+    ? dangers + " red flag" + (dangers === 1 ? "" : "s") + " found"
+    : warns ? warns + " thing" + (warns === 1 ? "" : "s") + " worth knowing"
+      : "Nothing alarming in what the chain shows";
+
+  const shareText = "sniffed " + (symbol ? "$" + symbol : mint.slice(0, 8)) + ": " + verdict.toLowerCase() + ".\n\nfree check, no wallet: tek.gimmiepets.com/sniff";
+
+  res.innerHTML = '<div class="headline"><strong>' + esc(name) + '</strong> <span class="sym">' + esc(symbol ? "$" + symbol : "") + '</span>' +
+    '<p style="margin:.4rem 0 0">' + esc(verdict) + '. That is not the same as safe.</p>' +
+    '<div class="stats">' +
+      '<div class="stat"><dt>Pool</dt><dd>' + usd(liquidity) + '</dd></div>' +
+      '<div class="stat"><dt>24h volume</dt><dd>' + usd(vol24) + '</dd></div>' +
+      '<div class="stat"><dt>Holders</dt><dd>' + (holders != null ? holders.toLocaleString() : "—") + '</dd></div>' +
+      '<div class="stat"><dt>Age</dt><dd>' + (createdAt != null ? age(createdAt) : "—") + '</dd></div>' +
+    '</div></div>' +
+    '<ul class="findings">' + f.map((x) =>
+      '<li class="finding"><span class="dot ' + x.level + '"></span><div><b>' + esc(x.title) + '</b><p>' + esc(x.text) + '</p></div></li>').join("") + '</ul>' +
+    '<div class="sources">' +
+      '<a href="https://rugcheck.xyz/tokens/' + esc(mint) + '" target="_blank" rel="noopener noreferrer">RugCheck</a>' +
+      '<a href="https://dexscreener.com/solana/' + esc(mint) + '" target="_blank" rel="noopener noreferrer">DexScreener</a>' +
+      '<a href="https://solscan.io/token/' + esc(mint) + '" target="_blank" rel="noopener noreferrer">Solscan</a>' +
+      '<a href="https://app.bubblemaps.io/sol/token/' + esc(mint) + '" target="_blank" rel="noopener noreferrer">Bubblemaps</a>' +
+      '<a href="https://x.com/intent/tweet?text=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener noreferrer">Post this</a>' +
+    '</div>' +
+    '<p class="hint" style="margin-top:1rem">A clean read on a new coin means there is nothing to read yet. It never means safe.</p>';
+}
+
+$("#sniff-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const v = $("#mint").value.trim();
+  if (!BASE58.test(v)) {
+    $("#result").hidden = false;
+    $("#result").innerHTML = '<div class="screen-note">&gt; that is not a solana address.<br>&gt; they run 32 to 44 characters and never contain 0, O, I or l.</div>';
+    setFace("404");
+    return;
+  }
+  history.replaceState(null, "", "?t=" + v);
+  sniff(v);
+});
+$("#try-self").addEventListener("click", () => { $("#mint").value = SELF; $("#sniff-form").requestSubmit(); });
+const preset = new URLSearchParams(location.search).get("t");
+if (preset && BASE58.test(preset)) { $("#mint").value = preset; sniff(preset); }
+</script>
+</body>
+</html>
