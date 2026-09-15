@@ -207,15 +207,26 @@ async function sniff(mint) {
           : creatorPct > 5 ? "A noticeable stake in one hand. Watch that wallet."
           : "A small stake, which is normal. It can still be sold at any time.");
     }
+    const known = report.knownAccounts || {};
+    const isPool = (h) => ["AMM", "POOL", "LOCKER", "VAULT"].includes((known[h.owner] || {}).type || "");
     const top = (report.topHolders || []);
-    const top5 = top.slice(0, 5).reduce((s, h) => s + (h.pct || 0), 0);
-    if (top.length) {
-      add(top5 > 50 ? "danger" : top5 > 25 ? "warn" : "info", "Top 5 wallets hold " + pct(top5),
-        "Pools and bonding curves show up in this list too. " + (top5 > 50 ? "This much in few hands means a handful of wallets can move the price alone." : "Check the holder map to see whether those wallets are connected."));
+    const pooledPct = top.filter(isPool).reduce((s, h) => s + (h.pct || 0), 0);
+    const real = top.filter((h) => !isPool(h));
+    const top5 = real.slice(0, 5).reduce((s, h) => s + (h.pct || 0), 0);
+    if (pooledPct > 20) {
+      add("info", pct(pooledPct) + " is still in the pool or on the curve",
+        "That share sits in the market itself, not in somebody's pocket. On a pump.fun coin it drops as people buy.");
+    }
+    if (real.length) {
+      add(top5 > 50 ? "danger" : top5 > 25 ? "warn" : "info", "Top " + Math.min(5, real.length) + " wallets hold " + pct(top5),
+        top5 > 50 ? "This much in a few hands means those wallets can move the price on their own."
+          : top5 > 25 ? "A meaningful share in few hands. Check the holder map to see whether they are connected."
+          : "No single wallet dominates what is actually circulating. Pools are excluded from this number.");
     }
     if (report.graphInsidersDetected) {
       add("warn", report.graphInsidersDetected + " connected wallets detected", "RugCheck thinks this many wallets are linked to each other. Clusters like that are often one person.");
     }
+    if (report.launchpad && report.launchpad.name) add("info", "Launched on " + report.launchpad.name, "");
     const market = (report.markets || [])[0];
     const locked = market?.lp?.lpLockedPct;
     if (locked != null) {
