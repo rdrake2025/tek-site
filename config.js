@@ -11,7 +11,7 @@
 window.TEK = {
   ticker: "$PETTEK",
   contract: "",                      // mint address; set on launch day
-  launchISO: "",                     // e.g. "2026-10-01T16:00:00Z"; counts down before launch, uptime after
+  launchISO: "2026-09-18T16:00:00Z",                     // e.g. "2026-10-01T16:00:00Z"; counts down before launch, uptime after
 
   links: {
     x: "",                           // https://x.com/yourhandle
