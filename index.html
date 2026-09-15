@@ -811,6 +811,31 @@ $("#copy-img").addEventListener("click", async () => {
 $("#post-x").addEventListener("click", () => { statusEl.textContent = "Attach the image you downloaded or copied, then post."; });
 
 Promise.all([TEKRender.loadUnit(), TEKRender.loadFonts()]).then(() => { ready = true; draw(); });
+
+/* A tab left open from before launch keeps showing whatever the config said when it loaded.
+   Re-read config.js every minute; if the contract or the launch time changed, refresh so the
+   visitor sees the live state. If they are mid-meme, tell them instead of wiping their work. */
+function readField(text, key) {
+  const at = text.indexOf(key + ":");
+  if (at < 0) return null;
+  const open = text.indexOf(String.fromCharCode(34), at);
+  const close = text.indexOf(String.fromCharCode(34), open + 1);
+  return open < 0 || close < 0 ? null : text.slice(open + 1, close);
+}
+setInterval(async () => {
+  try {
+    const res = await fetch("config.js?v=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) return;
+    const text = await res.text();
+    const contract = readField(text, "contract");
+    const launch = readField(text, "launchISO");
+    if (contract === null || (contract === CFG.contract && launch === CFG.launchISO)) return;
+    const busy = state.top.trim() || state.bottom.trim() || state.screen !== ">_";
+    if (busy) statusEl.textContent = "This page is out of date: the contract is live now. Refresh when you have finished your meme.";
+    else location.reload();
+  } catch {}
+}, 60000);
+
 </script>
 </body>
 </html>
