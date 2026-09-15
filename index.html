@@ -125,6 +125,14 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
 .lore-copy p { font-size: 1.125rem; }
 .lore-copy code { font-family: var(--crt); font-size: 1.3em; line-height: 1; }
 
+/* ---------- what it is / isn't ---------- */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.25rem, 3vw, 2.5rem); }
+.duo > div { background: var(--putty-hi); border: 3px solid var(--ink); border-radius: 12px; padding: 1.3rem 1.5rem 1.5rem; }
+.duo > .dashed { background: transparent; border-style: dashed; }
+.duo ul { margin: 1rem 0 0; padding: 0; list-style: none; }
+.duo li { padding: .75rem 0; border-top: 2px solid rgba(43, 42, 38, .18); color: var(--ink-soft); }
+.note { margin-top: 1.75rem; font-size: 1.05rem; max-width: 48rem; }
+
 /* ---------- meme generator ---------- */
 .gen { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
 .gen canvas { width: 100%; height: auto; aspect-ratio: 1; border: 4px solid var(--ink); border-radius: 14px; background: var(--putty-lo); box-shadow: 8px 8px 0 var(--ink); }
@@ -212,7 +220,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
-  .hero .wrap, .lore .wrap, .spec .wrap, .gen, .foot .wrap { grid-template-columns: 1fr; }
+  .hero .wrap, .lore .wrap, .spec .wrap, .gen, .duo, .foot .wrap { grid-template-columns: 1fr; }
   .unit { width: min(92%, 440px); }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .dict { grid-template-columns: 1fr; }
@@ -246,6 +254,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
     <a class="badge" href="#top" aria-label="PetTek home">PetTek</a>
     <nav aria-label="Sections">
       <a href="#lore">Lore</a>
+      <a href="#what">What it is</a>
       <a href="#screen">Make a meme</a>
       <a href="#checks">Checks</a>
       <a href="#changelog">Changelog</a>
@@ -307,6 +316,34 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
       <p>TEK doesn't understand charts. It isn't allowed on the rug. It knows how to fetch and how to build, so it does both, and every Friday it drops the patch notes at your feet like a tennis ball.</p>
       <p>Its favorite toy is a rubber duck named Debug. When something breaks, TEK explains the problem to the duck. It usually works.</p>
     </div>
+  </div>
+</section>
+
+<section class="panel" id="what">
+  <div class="wrap">
+    <h2>What PetTek is</h2>
+    <p class="sub">The short answer, before anyone has to ask.</p>
+    <div class="duo">
+      <div>
+        <h3>It is</h3>
+        <ul>
+          <li>A meme coin with a robot dog and a build log</li>
+          <li>A meme generator anyone can use, free, with no wallet</li>
+          <li>A Telegram bot on the way that checks any Solana coin for rug signals</li>
+          <li>Public wallets, and checks that link to the chain instead of to our word</li>
+        </ul>
+      </div>
+      <div class="dashed">
+        <h3>It isn't</h3>
+        <ul>
+          <li>An investment, a share in a company, or a promise that anything goes up</li>
+          <li>Staking, yield, revenue share or fees paid to holders. None of that exists here.</li>
+          <li>A GimmiePets product. Buying PETTEK gives you no rights in the shop.</li>
+          <li>Safe. Meme coins go to zero all the time, this one included.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">The token itself doesn't do anything. The project does, and every claim on this page links to a public record.</p>
   </div>
 </section>
 
