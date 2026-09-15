@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -4 332 266" ><title>TEK</title><defs>
+    <radialGradient id="u-glass" cx="50%" cy="42%" r="70%"><stop offset="0" stop-color="#33280F"/><stop offset="1" stop-color="#12100C"/></radialGradient>
+    <pattern id="u-scan" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="3" fill="#000" fill-opacity=".28"/></pattern>
+    <filter id="u-bloom" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <path d="M46 48C16 44 2 72 4 106C6 140 18 162 38 160L52 110Z" fill="#8F8672" stroke="#2B2A26" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M276 52C306 48 320 76 318 110C316 144 304 166 284 164L270 112Z" fill="#8F8672" stroke="#2B2A26" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="28" cy="78" r="4.5" fill="#2B2A26"/>
+  <circle cx="298" cy="82" r="4.5" fill="#2B2A26"/>
+  <path d="M155 32V22" stroke="#2B2A26" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="155" cy="13" r="9" fill="#43D46C" stroke="#2B2A26" stroke-width="4.5"/>
+  <rect x="50" y="40" width="230" height="176" rx="28" fill="#B8AE96" stroke="#2B2A26" stroke-width="7"/>
+  <rect x="40" y="32" width="230" height="176" rx="28" fill="#E6DFCD" stroke="#2B2A26" stroke-width="7"/>
+  <rect x="58" y="50" width="194" height="126" rx="20" fill="#4A463C" stroke="#2B2A26" stroke-width="5"/>
+  <rect x="71" y="61" width="168" height="104" rx="14" fill="url(#u-glass)"/>
+  <rect x="71" y="61" width="168" height="104" rx="14" fill="url(#u-scan)"/>
+  <path d="M86 82c12-8 28-12 48-12" fill="none" stroke="#FFFFFF" stroke-opacity=".13" stroke-width="6" stroke-linecap="round"/>
+  <g filter="url(#u-bloom)"><path d="M124 90l24 23-24 23" fill="none" stroke="#FFB547" stroke-width="11" stroke-linecap="square" stroke-linejoin="miter"/><rect x="156" y="127" width="36" height="10" fill="#FFB547"/></g>
+  <rect x="62" y="182" width="50" height="17" rx="4" fill="#CFC6B0" stroke="#2B2A26" stroke-width="3"/>
+  <text x="87" y="195" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="11" fill="#2B2A26">TEK</text>
+  <circle cx="128" cy="190.5" r="5" fill="#43D46C" stroke="#2B2A26" stroke-width="2.5"/>
+  <path d="M198 184h46M198 191h46M198 198h46" stroke="#2B2A26" stroke-width="4" stroke-linecap="round"/>
+  <rect x="94" y="208" width="124" height="16" rx="8" fill="#2F4A63" stroke="#2B2A26" stroke-width="4"/>
+  <path d="M156 224v6" stroke="#2B2A26" stroke-width="4"/>
+  <circle cx="156" cy="242" r="13" fill="#FFB547" stroke="#2B2A26" stroke-width="4"/>
+  <circle cx="156" cy="234.5" r="2.5" fill="#2B2A26"/></svg>

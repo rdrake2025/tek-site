@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TEK — sit. stay. ship.</title>
+<meta name="description" content="TEK is a robot dog and a Solana meme coin with a build log. It fetches, it ships, and it isn't allowed on the rug.">
+<meta property="og:title" content="TEK — sit. stay. ship.">
+<meta property="og:description" content="A robot dog meme coin with a build log. Make a TEK meme, run the checks, read the changelog.">
+<meta property="og:image" content="https://tek.gimmiepets.com/og-image.png">
+<meta property="og:url" content="https://tek.gimmiepets.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tek.gimmiepets.com/og-image.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root {
+  --putty: #CFC6B0;
+  --putty-hi: #E6DFCD;
+  --putty-lo: #B8AE96;
+  --ink: #2B2A26;
+  --ink-soft: #4E4A42;
+  --glass: #15130E;
+  --phosphor: #FFB547;
+  --signal: #43D46C;
+  --fault: #E4472F;
+  --label: #F1EDE3;
+  --wide: "Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --crt: "VT323", "Cascadia Mono", Consolas, monospace;
+  --measure: 34rem;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--putty);
+  color: var(--ink);
+  font-family: var(--wide);
+  font-size: 1.0625rem;
+  font-variation-settings: "wdth" 100;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg, canvas { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+.screen :focus-visible, .key-dark:focus-visible { outline-color: var(--phosphor); }
+
+.wrap { width: min(1180px, 100% - 2.5rem); margin-inline: auto; }
+
+/* case seams separate panels of the machine */
+.panel { padding-block: clamp(3.5rem, 8vw, 6.5rem); border-top: 2px solid rgba(43, 42, 38, .22); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .28); }
+
+h1, h2, h3 { margin: 0; font-weight: 850; line-height: .95; letter-spacing: -.01em; }
+h1 { font-size: clamp(3.2rem, 7.6vw, 6.8rem); font-variation-settings: "wdth" 125; text-wrap: balance; line-height: .9; }
+h2 { font-size: clamp(2.1rem, 4.4vw, 3.4rem); font-variation-settings: "wdth" 120; margin-bottom: .9rem; }
+h3 { font-size: 1.25rem; font-variation-settings: "wdth" 112; line-height: 1.15; }
+p { margin: 0 0 1rem; max-width: var(--measure); }
+.lede { font-size: clamp(1.15rem, 1.8vw, 1.35rem); line-height: 1.45; color: var(--ink-soft); margin-top: 1.5rem; }
+.sub { color: var(--ink-soft); margin-bottom: 2.5rem; }
+
+/* ---------- header ---------- */
+.top { position: sticky; top: 0; z-index: 10; background: rgba(207, 198, 176, .92); backdrop-filter: blur(8px); border-bottom: 2px solid rgba(43, 42, 38, .22); }
+.top .wrap { display: flex; align-items: center; gap: 1.5rem; min-height: 4.25rem; }
+.badge {
+  display: inline-grid; place-items: center; padding: .15rem .7rem .2rem;
+  background: var(--putty-hi); border: 3px solid var(--ink); border-radius: 6px;
+  font-weight: 900; font-size: 1.2rem; letter-spacing: .04em; text-decoration: none;
+  font-variation-settings: "wdth" 125; box-shadow: 0 3px 0 var(--ink);
+}
+.top nav { display: flex; gap: 1.25rem; margin-left: auto; }
+.top nav a { text-decoration: none; font-weight: 600; font-size: .95rem; }
+.top nav a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+
+/* ---------- keycaps ---------- */
+.key {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 3rem; padding: .7rem 1.25rem; border-radius: 10px;
+  font: inherit; font-weight: 750; font-size: 1rem; font-variation-settings: "wdth" 110;
+  text-decoration: none; cursor: pointer; transition: transform .06s, box-shadow .06s;
+}
+.key-dark { background: var(--ink); color: var(--putty-hi); border: 3px solid var(--ink); box-shadow: 0 5px 0 #0F0E0C; }
+.key-light { background: var(--putty-hi); color: var(--ink); border: 3px solid var(--ink); box-shadow: 0 5px 0 var(--ink); }
+.key:active:not([aria-disabled="true"]) { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+.key[aria-disabled="true"] { opacity: .6; cursor: not-allowed; box-shadow: 0 2px 0 var(--ink); }
+.key-small { min-height: 2.5rem; padding: .45rem .9rem; font-size: .9rem; }
+
+/* ---------- hero ---------- */
+.hero { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(3rem, 7vw, 6rem); }
+.hero .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
+
+.slot { margin-top: 2rem; max-width: 36rem; }
+.slot-label { font-size: .9rem; font-weight: 650; color: var(--ink-soft); margin-bottom: .4rem; display: block; }
+.slot-row { display: flex; align-items: stretch; background: var(--glass); border: 3px solid var(--ink); border-radius: 10px; overflow: hidden; }
+.slot code {
+  flex: 1; min-width: 0; padding: .6rem .9rem; color: var(--phosphor);
+  font-family: var(--crt); font-size: 1.35rem; line-height: 1.2; overflow-wrap: anywhere;
+}
+.slot code.pending { color: #C9A56B; font-size: 1.2rem; }
+.slot button { border: 0; border-left: 3px solid var(--ink); background: var(--putty-hi); color: var(--ink); font: inherit; font-weight: 750; padding: 0 1.1rem; cursor: pointer; }
+.slot button:disabled { color: var(--ink-soft); cursor: not-allowed; background: var(--putty-lo); }
+.clock { margin-top: 1rem; font-size: .95rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+.unit-button { background: none; border: 0; padding: 0; cursor: pointer; width: 100%; }
+.unit { width: min(100%, 560px); height: auto; margin-inline: auto; }
+.unit-hint { text-align: center; font-size: .9rem; color: var(--ink-soft); margin: .5rem auto 0; }
+
+/* ---------- screens (dark glass inside the case) ---------- */
+.screen {
+  background: radial-gradient(120% 90% at 50% 40%, #2A2113 0%, var(--glass) 70%);
+  border: 6px solid #4A463C; outline: 3px solid var(--ink); border-radius: 18px;
+  color: var(--phosphor); font-family: var(--crt); position: relative; overflow: hidden;
+}
+.screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0,0,0,.25) 0 2px, transparent 2px 4px); }
+
+/* ---------- lore ---------- */
+.lore .wrap { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.bootlog { padding: 1.5rem 1.6rem; font-size: clamp(1.2rem, 1.9vw, 1.5rem); line-height: 1.35; text-shadow: 0 0 8px rgba(255, 181, 71, .45); }
+.bootlog p { margin: 0; max-width: none; }
+.bootlog .dim { color: #B98C45; }
+.lore-copy p { font-size: 1.125rem; }
+.lore-copy code { font-family: var(--crt); font-size: 1.3em; line-height: 1; }
+
+/* ---------- meme generator ---------- */
+.gen { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.gen canvas { width: 100%; height: auto; aspect-ratio: 1; border: 4px solid var(--ink); border-radius: 14px; background: var(--putty-lo); box-shadow: 8px 8px 0 var(--ink); }
+.field { margin-bottom: 1.35rem; }
+.field label, .field .legend { display: block; font-weight: 700; font-size: .95rem; margin-bottom: .4rem; }
+.field .hint { font-weight: 450; color: var(--ink-soft); }
+.field input, .field textarea {
+  width: 100%; font: inherit; font-size: 1rem; color: var(--ink); background: var(--putty-hi);
+  border: 3px solid var(--ink); border-radius: 8px; padding: .6rem .75rem;
+}
+.field textarea { font-family: var(--crt); font-size: 1.5rem; line-height: 1.1; resize: vertical; min-height: 5.2rem; background: var(--glass); color: var(--phosphor); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.faces { display: flex; flex-wrap: wrap; gap: .5rem; }
+.face {
+  font-family: var(--crt); font-size: 1.3rem; line-height: 1; padding: .45rem .65rem .35rem;
+  background: var(--glass); color: var(--phosphor); border: 3px solid var(--ink); border-radius: 7px;
+  box-shadow: 0 3px 0 var(--ink); cursor: pointer; white-space: pre;
+}
+.face[aria-pressed="true"] { background: var(--phosphor); color: var(--glass); }
+.swatches { display: flex; gap: .6rem; flex-wrap: wrap; }
+.swatch { width: 2.75rem; height: 2.75rem; border-radius: 8px; border: 3px solid var(--ink); cursor: pointer; box-shadow: 0 3px 0 var(--ink); }
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--putty), 0 0 0 6px var(--ink); }
+.gen-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.75rem; }
+.status { min-height: 1.5rem; margin-top: .9rem; font-size: .95rem; color: var(--ink-soft); }
+
+/* ---------- checks: a diagnostics readout ---------- */
+.checks { list-style: none; margin: 0; padding: 0; border: 3px solid var(--ink); border-radius: 12px; background: var(--putty-hi); overflow: hidden; }
+.check { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 1rem; align-items: center; padding: 1rem 1.25rem; }
+.check + .check { border-top: 2px solid rgba(43, 42, 38, .18); }
+.led { width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid var(--ink); }
+.led.on { background: var(--signal); box-shadow: 0 0 8px rgba(67, 212, 108, .7); }
+.led.wait { background: var(--phosphor); }
+.check p { margin: .15rem 0 0; color: var(--ink-soft); font-size: .98rem; max-width: 44rem; }
+.check .state { font-size: .9rem; font-weight: 650; white-space: nowrap; }
+.check .state a { font-weight: 750; text-underline-offset: 3px; text-decoration-thickness: 2px; }
+
+/* ---------- collar tag: token details as a label ---------- */
+.spec .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+.label {
+  background: var(--label); border: 3px solid var(--ink); border-radius: 6px; padding: 1.4rem 1.5rem 1.2rem;
+  box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 6px 6px 0 rgba(43, 42, 38, .25); transform: rotate(-.6deg);
+}
+.label-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 3px solid var(--ink); padding-bottom: .6rem; margin-bottom: .4rem; }
+.label-head strong { font-size: 1.6rem; font-variation-settings: "wdth" 125; font-weight: 900; }
+.label-head span { font-size: .85rem; font-weight: 650; }
+.label dl { display: grid; grid-template-columns: max-content 1fr; margin: 0; }
+.label dt, .label dd { padding: .5rem 0; border-bottom: 1px solid rgba(43, 42, 38, .3); font-size: .95rem; }
+.label dt { font-weight: 750; padding-right: 1.5rem; }
+.label dd { margin: 0; }
+.label .caution { margin: 1rem 0 .8rem; font-size: .9rem; max-width: none; padding: .7rem .8rem; border: 2px solid var(--ink); border-radius: 4px; }
+.barcode { height: 34px; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 7px, transparent 7px 9px, var(--ink) 9px 10px, transparent 10px 14px); }
+
+/* ---------- changelog ---------- */
+.log { list-style: none; margin: 0; padding: 0; display: grid; }
+.release { display: grid; grid-template-columns: 7rem minmax(0, 1fr) auto; gap: 1.25rem; padding: 1.25rem 0; border-top: 2px solid rgba(43, 42, 38, .22); align-items: baseline; }
+.release:last-child { border-bottom: 2px solid rgba(43, 42, 38, .22); }
+.release .ver { font-family: var(--crt); font-size: 1.9rem; line-height: 1; }
+.release p { margin: .3rem 0 0; color: var(--ink-soft); max-width: 40rem; }
+.tag { font-size: .85rem; font-weight: 750; padding: .2rem .6rem; border: 2px solid var(--ink); border-radius: 999px; white-space: nowrap; }
+.tag.shipped { background: var(--signal); }
+.tag.building { background: var(--phosphor); }
+.tag.planned { background: transparent; }
+.tag.deprecated { background: var(--ink); color: var(--putty-hi); }
+
+/* ---------- dictionary ---------- */
+.dict { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 3rem; margin: 0; }
+.dict div { padding: .9rem 0; border-top: 2px solid rgba(43, 42, 38, .22); }
+.dict dt { font-weight: 800; font-variation-settings: "wdth" 112; }
+.dict dt code { font-family: var(--crt); font-size: 1.35rem; font-weight: 400; }
+.dict dd { margin: .15rem 0 0; color: var(--ink-soft); }
+
+/* ---------- how to buy ---------- */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; counter-reset: step; }
+.steps li { counter-increment: step; background: var(--putty-hi); border: 3px solid var(--ink); border-radius: 12px; padding: 1.2rem 1.2rem 1.3rem; }
+.steps li::before { content: counter(step); display: grid; place-items: center; width: 2.2rem; height: 2.2rem; margin-bottom: .9rem; background: var(--ink); color: var(--phosphor); font-family: var(--crt); font-size: 1.6rem; border-radius: 6px; }
+.steps p { margin: .5rem 0 0; font-size: .98rem; color: var(--ink-soft); }
+
+/* ---------- footer ---------- */
+.foot { background: var(--ink); color: var(--putty); padding-block: 3.5rem; }
+.foot .wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2.5rem; }
+.foot p { color: #D9D1BD; font-size: .95rem; }
+.foot .badge { background: var(--putty); color: var(--ink); box-shadow: 0 3px 0 #0F0E0C; border-color: var(--putty); margin-bottom: 1rem; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; align-content: start; }
+.foot a { color: var(--putty-hi); text-underline-offset: 3px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .hero .wrap, .lore .wrap, .spec .wrap, .gen, .foot .wrap { grid-template-columns: 1fr; }
+  .unit { width: min(92%, 440px); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dict { grid-template-columns: 1fr; }
+  .label { transform: none; }
+}
+@media (max-width: 640px) {
+  .top nav { display: none; }
+  .top .key { margin-left: auto; }
+  .release { grid-template-columns: 1fr auto; }
+  .release .ver { grid-column: 1; }
+  .release > div { grid-column: 1 / -1; grid-row: 2; }
+  .steps, .two { grid-template-columns: 1fr; }
+  .check { grid-template-columns: auto minmax(0, 1fr); }
+  .check .state { grid-column: 2; white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .key { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="badge" href="#top" aria-label="TEK home">TEK</a>
+    <nav aria-label="Sections">
+      <a href="#lore">Lore</a>
+      <a href="#screen">Make a meme</a>
+      <a href="#checks">Checks</a>
+      <a href="#changelog">Changelog</a>
+      <a href="#buy">How to buy</a>
+    </nav>
+    <a class="key key-dark key-small" id="nav-key">Opens at launch</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Sit. Stay. Ship.</h1>
+      <p class="lede">TEK is a robot dog and a Solana meme coin with a build log. It fetches, it ships, and it isn't allowed on the rug.</p>
+
+      <div class="slot">
+        <span class="slot-label" id="ca-label">Contract address</span>
+        <div class="slot-row">
+          <code id="ca" aria-labelledby="ca-label"></code>
+          <button type="button" id="copy-ca">Copy</button>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a class="key key-dark" id="hero-primary">Buying opens at launch</a>
+        <a class="key key-light" href="#screen">Make a TEK meme</a>
+        <a class="key key-light" id="hero-tg" hidden>Join the Kennel</a>
+      </div>
+      <p class="clock" id="clock"></p>
+    </div>
+
+    <div>
+      <button class="unit-button" type="button" id="unit-button" aria-label="Pet TEK to change what's on its screen">
+        <span id="unit-slot"></span>
+      </button>
+      <p class="unit-hint">Pet TEK to change the screen.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel lore" id="lore">
+  <div class="wrap">
+    <div class="screen bootlog" aria-label="TEK boot log">
+      <p>&gt; power on</p>
+      <p class="dim">&gt; location: gimmiepets stockroom, shelf 3</p>
+      <p class="dim">&gt; 0 wallets, 0 charts, 0 rugs</p>
+      <p>&gt; 1 line recovered:</p>
+      <p>&nbsp;&nbsp;while (good_boy) {</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;fetch(); ship();</p>
+      <p>&nbsp;&nbsp;}</p>
+      <p>&gt; good_boy = true _</p>
+    </div>
+    <div class="lore-copy">
+      <h2>Boot log</h2>
+      <p>Behind the dog hammocks and detangling combs in the GimmiePets stockroom, a prototype robot dog powered on.</p>
+      <p>Its drive had been wiped. One line survived, and <code>good_boy</code> has never once been false.</p>
+      <p>TEK doesn't understand charts. It isn't allowed on the rug. It knows how to fetch and how to build, so it does both, and every Friday it drops the patch notes at your feet like a tennis ball.</p>
+      <p>Its favorite toy is a rubber duck named Debug. When something breaks, TEK explains the problem to the duck. It usually works.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="screen">
+  <div class="wrap">
+    <h2>What's on the screen?</h2>
+    <p class="sub">TEK's face is whatever its screen says. Type something, pick a background, post it.</p>
+
+    <div class="gen">
+      <canvas id="meme" width="1080" height="1080" aria-label="Preview of your TEK meme"></canvas>
+
+      <form id="gen-form" onsubmit="return false">
+        <div class="field">
+          <label for="screen-text">Screen text <span class="hint">(up to 3 lines)</span></label>
+          <textarea id="screen-text" rows="3" maxlength="48" spellcheck="false">&gt;_</textarea>
+        </div>
+
+        <div class="field">
+          <span class="legend" id="faces-label">Quick faces</span>
+          <div class="faces" role="group" aria-labelledby="faces-label" id="faces"></div>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label for="cap-top">Top caption</label>
+            <input id="cap-top" maxlength="70" placeholder="explaining the chart">
+          </div>
+          <div class="field">
+            <label for="cap-bottom">Bottom caption</label>
+            <input id="cap-bottom" maxlength="70" placeholder="to the duck">
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="legend" id="bg-label">Background</span>
+          <div class="swatches" role="group" aria-labelledby="bg-label" id="swatches"></div>
+        </div>
+
+        <div class="gen-actions">
+          <button type="button" class="key key-dark" id="download">Download PNG</button>
+          <button type="button" class="key key-light" id="copy-img">Copy image</button>
+          <a class="key key-light" id="post-x" target="_blank" rel="noopener noreferrer">Write a post on X</a>
+        </div>
+        <p class="status" id="gen-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="checks">
+  <div class="wrap">
+    <h2>Not allowed on the rug</h2>
+    <p class="sub">Run these checks before buying any coin, this one included. Every line links to a public record you can read yourself, not to a promise from us.</p>
+    <ul class="checks" id="check-list"></ul>
+  </div>
+</section>
+
+<section class="panel spec" id="spec">
+  <div class="wrap">
+    <div>
+      <h2>Collar tag</h2>
+      <p class="sub">Everything about the token, on one tag. No presale, no team allocation, no tax.</p>
+    </div>
+    <div class="label" role="group" aria-label="Token details">
+      <div class="label-head"><strong>TEK-01</strong><span>Solana SPL token</span></div>
+      <dl>
+        <dt>Ticker</dt><dd data-ticker>$TEK</dd>
+        <dt>Supply</dt><dd>1,000,000,000</dd>
+        <dt>Launch</dt><dd>Fair launch on pump.fun. Everyone buys from the same curve.</dd>
+        <dt>Presale</dt><dd>None</dd>
+        <dt>Team allocation</dt><dd>None. The dev buy is posted with its transaction and locked.</dd>
+        <dt>Tax</dt><dd>0% buy, 0% sell</dd>
+        <dt>Mint and freeze</dt><dd>Disabled by pump.fun at creation. Check it on Solscan.</dd>
+        <dt>Liquidity</dt><dd>Bonding curve, then a protocol-held pool on PumpSwap</dd>
+      </dl>
+      <p class="caution">Caution: contains no user-serviceable promises. Meme coins go to zero all the time. Only spend what you're fine losing.</p>
+      <div class="barcode" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="changelog">
+  <div class="wrap">
+    <h2>Changelog</h2>
+    <p class="sub">Plans, not promises. Each version ships, or gets marked deprecated with the reason why.</p>
+    <ol class="log" id="log"></ol>
+  </div>
+</section>
+
+<section class="panel" id="dictionary">
+  <div class="wrap">
+    <h2>Pack dictionary</h2>
+    <p class="sub">How the Kennel talks.</p>
+    <dl class="dict" id="dict"></dl>
+  </div>
+</section>
+
+<section class="panel" id="buy">
+  <div class="wrap">
+    <h2>How to buy</h2>
+    <p class="sub">Four steps. Nobody from TEK will ever ask for your seed phrase or DM you first.</p>
+    <ol class="steps">
+      <li><h3>Get a Solana wallet</h3><p>Phantom, Solflare or Backpack. Write the seed phrase on paper and never type it into a website.</p></li>
+      <li><h3>Get some SOL</h3><p>Buy SOL on an exchange and send it to your wallet address.</p></li>
+      <li><h3>Copy the contract</h3><p>Only from this page or the pinned post on TEK's X account. Look-alike coins will copy the name.</p></li>
+      <li><h3>Swap for TEK</h3><p>On pump.fun while the curve is filling, or on Jupiter after TEK graduates.</p></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <span class="badge">TEK</span>
+      <p>TEK is a meme coin. It is not an investment, a share in a company, or a promise that anything will be worth anything. The changelog is a plan, not a guarantee. Nothing on this site is financial advice.</p>
+      <p>TEK's story starts in the GimmiePets stockroom, and GimmiePets sells pet gear. Buying TEK isn't a purchase from GimmiePets and gives you no rights in the shop.</p>
+      <p>Admins never DM first. The only contract address is the one on this page and in the pinned post on X.</p>
+    </div>
+    <ul id="socials"></ul>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="tek-render.js"></script>
+<script>
+const CFG = Object.assign({ ticker: "$TEK", contract: "", launchISO: "", roadmap: [] }, window.TEK);
+CFG.links = Object.assign({}, CFG.links);
+CFG.wallets = Object.assign({}, CFG.wallets);
+
+const $ = (sel, root = document) => root.querySelector(sel);
+const BASE58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
+const ca = (CFG.contract || "").trim();
+const live = BASE58.test(ca);
+if (ca && !live) console.warn("TEK config: contract does not look like a Solana address, so it is not shown.");
+
+const links = {
+  pumpfun: CFG.links.pumpfun || (live ? `https://pump.fun/coin/${ca}` : ""),
+  dexscreener: CFG.links.dexscreener || (live ? `https://dexscreener.com/solana/${ca}` : ""),
+  jupiter: CFG.links.jupiter || "",
+  solscan: live ? `https://solscan.io/token/${ca}` : "",
+  rugcheck: live ? `https://rugcheck.xyz/tokens/${ca}` : "",
+  bubblemaps: live ? `https://app.bubblemaps.io/sol/token/${ca}` : "",
+  dev: BASE58.test(CFG.wallets.dev || "") ? `https://solscan.io/account/${CFG.wallets.dev}` : "",
+  lock: CFG.wallets.devLockUrl || "",
+  fees: BASE58.test(CFG.wallets.creatorFees || "") ? `https://solscan.io/account/${CFG.wallets.creatorFees}` : "",
+};
+links.buy = links.jupiter || links.pumpfun;
+
+document.querySelectorAll("[data-ticker]").forEach((el) => (el.textContent = CFG.ticker));
+
+/* ---------- contract slot ---------- */
+const caEl = $("#ca");
+const copyCa = $("#copy-ca");
+if (live) {
+  caEl.textContent = ca;
+} else {
+  caEl.textContent = "Posts here at launch. Any address you see before then isn't TEK.";
+  caEl.classList.add("pending");
+  copyCa.disabled = true;
+}
+copyCa.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(ca);
+    copyCa.textContent = "Copied";
+  } catch {
+    getSelection().selectAllChildren(caEl);
+    copyCa.textContent = "Press Ctrl+C";
+  }
+  setTimeout(() => (copyCa.textContent = "Copy"), 1800);
+});
+
+/* ---------- primary actions: follow before launch, buy after ---------- */
+function setKey(el, url, label) {
+  if (url) {
+    el.href = url;
+    el.target = "_blank";
+    el.rel = "noopener noreferrer";
+    el.removeAttribute("aria-disabled");
+  } else {
+    el.removeAttribute("href");
+    el.setAttribute("aria-disabled", "true");
+  }
+  el.textContent = label;
+}
+if (live) {
+  setKey($("#hero-primary"), links.buy, links.jupiter ? "Buy on Jupiter" : "Buy on pump.fun");
+  setKey($("#nav-key"), links.buy, `Buy ${CFG.ticker}`);
+} else if (CFG.links.x) {
+  setKey($("#hero-primary"), CFG.links.x, "Follow TEK on X");
+  setKey($("#nav-key"), CFG.links.x, "Follow on X");
+} else {
+  setKey($("#hero-primary"), "", "Buying opens at launch");
+  setKey($("#nav-key"), "", "Opens at launch");
+}
+if (CFG.links.telegram) {
+  $("#hero-tg").hidden = false;
+  setKey($("#hero-tg"), CFG.links.telegram, "Join the Kennel");
+}
+
+/* ---------- countdown / uptime ---------- */
+const clockEl = $("#clock");
+const launchAt = Date.parse(CFG.launchISO);
+const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+function span(ms, withMinutes) {
+  const mins = Math.max(0, Math.floor(ms / 60000));
+  const d = Math.floor(mins / 1440), h = Math.floor((mins % 1440) / 60), m = mins % 60;
+  const parts = [];
+  if (d) parts.push(plural(d, "day"));
+  if (h || d) parts.push(plural(h, "hour"));
+  if (withMinutes || !d) parts.push(plural(m, "minute"));
+  return parts.join(", ");
+}
+const launchLabel = Number.isNaN(launchAt) ? "" : new Intl.DateTimeFormat("en-GB", {
+  weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC",
+}).format(launchAt) + " UTC";
+function tickClock() {
+  const now = Date.now();
+  if (Number.isNaN(launchAt)) clockEl.textContent = live ? "" : "Launch date posts soon.";
+  else if (launchAt > now) clockEl.textContent = `Launches ${launchLabel}. That's in ${span(launchAt - now, launchAt - now < 86400000)}.`;
+  else if (!live) clockEl.textContent = "Launching now. The contract address appears here the moment the coin exists.";
+  else clockEl.textContent = `Uptime: ${span(now - launchAt, false)}.`;
+}
+tickClock();
+setInterval(tickClock, 20000);
+
+/* ---------- checks ---------- */
+const CHECKS = [
+  { name: "Mint authority", text: "Nobody can print more TEK.", link: links.solscan, via: "Solscan" },
+  { name: "Freeze authority", text: "Nobody can freeze the TEK in your wallet.", link: links.rugcheck, via: "RugCheck" },
+  { name: "Liquidity", text: "Bonding curve on pump.fun, then a pool on PumpSwap that the protocol holds, not the dev.", link: links.dexscreener, via: "DexScreener" },
+  { name: "Dev buy", text: "Size and transaction posted within minutes of launch.", link: links.dev, via: "Solscan" },
+  { name: "Dev lock", text: "The dev buy is locked on a public schedule anyone can read.", link: links.lock, via: "the lock contract" },
+  { name: "Creator fees", text: "Trading fees go to a public wallet and get spent on the changelog.", link: links.fees, via: "Solscan" },
+  { name: "Holder map", text: "Top wallets and clusters are visible. No hidden bundles.", link: links.bubblemaps, via: "Bubblemaps" },
+];
+$("#check-list").innerHTML = CHECKS.map((c) => `
+  <li class="check">
+    <span class="led ${c.link ? "on" : "wait"}" aria-hidden="true"></span>
+    <div><h3>${c.name}</h3><p>${c.text}</p></div>
+    <span class="state">${c.link
+      ? `<a href="${c.link}" target="_blank" rel="noopener noreferrer">Check it on ${c.via}</a>`
+      : "Link posts at launch"}</span>
+  </li>`).join("");
+
+/* ---------- changelog ---------- */
+const TAGS = { shipped: "Shipped", building: "Building", planned: "Planned", deprecated: "Deprecated" };
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+$("#log").innerHTML = CFG.roadmap.map((r) => `
+  <li class="release">
+    <span class="ver">${esc(r.ver)}</span>
+    <div><h3>${esc(r.name)}</h3><p>${esc(r.text)}</p></div>
+    <span class="tag ${esc(r.status)}">${TAGS[r.status] || esc(r.status)}</span>
+  </li>`).join("");
+
+/* ---------- dictionary ---------- */
+const DICT = [
+  [">_ woof", "Good morning.", true],
+  ["The Pack", "Anyone holding TEK."],
+  ["The Kennel", "The Telegram."],
+  ["Handlers", "The mods. They never DM first."],
+  ["fetch()", "Go get something done.", true],
+  ["Sit. Stay. Ship.", "The whole plan."],
+  ["Stay", "Holding through a red week. Also: no rollback on the contract."],
+  ["Not allowed on the rug", "TEK's position on rug pulls."],
+  ["Patch notes", "The Friday post on what shipped that week."],
+  ["Treats", "Bounty prizes for memes and builds."],
+  ["Walkies", "The weekly X Space."],
+  ["Bark report", "Criticism. Answered with links, not vibes."],
+  ["Vaporware", "A coin that promised things and never shipped."],
+  ["Nap time", "A red day. Shipping resumes tomorrow."],
+  ["Debug", "TEK's rubber duck. Hears every problem first."],
+  [">_ zzz", "Good night.", true],
+];
+$("#dict").innerHTML = DICT.map(([term, def, crt]) =>
+  `<div><dt>${crt ? `<code>${esc(term)}</code>` : esc(term)}</dt><dd>${esc(def)}</dd></div>`).join("");
+
+/* ---------- socials ---------- */
+const socials = [
+  ["X", CFG.links.x], ["Telegram", CFG.links.telegram], ["Sticker pack", CFG.links.stickers],
+  ["pump.fun", links.pumpfun], ["DexScreener", links.dexscreener], ["GimmiePets shop", CFG.links.store],
+].filter(([, url]) => url);
+$("#socials").innerHTML = socials.map(([name, url]) =>
+  `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${name}</a></li>`).join("") || "<li>Links go live at launch.</li>";
+
+/* ---------- hero: TEK and its screen ---------- */
+$("#unit-slot").innerHTML = TEKRender.unitMarkup("text", "full", 'id="tek-unit" class="unit" role="img" aria-labelledby="unit-title"');
+const screenText = $("#tek-unit [data-screen]");
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const HERO_FACES = [">_", "woof", "^_^", "fetch()", "sit.\nstay.\nship.", "0_0", "not on\nthe rug", ">:)", "good\nboy"];
+
+let faceIndex = 0, typing = null;
+function showFace(i, animate) {
+  clearInterval(typing);
+  const face = HERO_FACES[i % HERO_FACES.length];
+  if (!animate) { TEKRender.setScreenText(screenText, face); return; }
+  let n = 0;
+  typing = setInterval(() => {
+    n++;
+    TEKRender.setScreenText(screenText, face.slice(0, n) + (n < face.length ? "_" : ""));
+    if (n >= face.length) clearInterval(typing);
+  }, 65);
+}
+$("#unit-button").addEventListener("click", () => showFace(++faceIndex, !reduceMotion));
+if (!reduceMotion) setInterval(() => { if (!document.hidden) showFace(++faceIndex, true); }, 3200);
+if (document.fonts) document.fonts.ready.then(() => showFace(faceIndex, false));
+
+/* ---------- meme generator ---------- */
+const canvas = $("#meme");
+const FACES = [">_", "^_^", "x_x", "0_0", "-_-", ">:)", "T_T", "404", "woof", "fetch()", "stay.", "good\nboy", "squeak", "sniff\nsniff", "ship\nit"];
+const BACKGROUNDS = [
+  { name: "Putty", color: "#CFC6B0", dark: false },
+  { name: "Phosphor", color: "#FFB547", dark: false },
+  { name: "Signal green", color: "#43D46C", dark: false },
+  { name: "Collar blue", color: "#2F4A63", dark: true },
+  { name: "Ink", color: "#2B2A26", dark: true },
+];
+const state = { screen: ">_", top: "", bottom: "", bg: BACKGROUNDS[0] };
+let ready = false;
+
+const facesEl = $("#faces");
+facesEl.innerHTML = FACES.map((f) => `<button type="button" class="face" data-face="${esc(f)}" aria-pressed="${f === state.screen}">${esc(f)}</button>`).join("");
+const swatchesEl = $("#swatches");
+swatchesEl.innerHTML = BACKGROUNDS.map((b, i) =>
+  `<button type="button" class="swatch" style="background:${b.color}" data-bg="${i}" aria-label="${b.name}" aria-pressed="${i === 0}"></button>`).join("");
+
+function draw() {
+  if (!ready) return;
+  TEKRender.drawMeme(canvas, { screen: state.screen, top: state.top, bottom: state.bottom, bg: state.bg.color, dark: state.bg.dark, watermark: `${CFG.ticker} >_` });
+  const words = [state.top.trim(), state.screen.replace(/\n/g, " ").trim(), state.bottom.trim()].filter(Boolean).join(" ");
+  const site = location.protocol.startsWith("http") ? `\n${location.origin}` : "";
+  $("#post-x").href = `https://x.com/intent/tweet?text=${encodeURIComponent(`${words}\n\n${CFG.ticker}${site}`)}`;
+}
+
+const screenInput = $("#screen-text");
+screenInput.addEventListener("input", () => {
+  state.screen = screenInput.value.split("\n").slice(0, 3).join("\n");
+  facesEl.querySelectorAll(".face").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.face === state.screen)));
+  draw();
+});
+facesEl.addEventListener("click", (e) => {
+  const b = e.target.closest(".face");
+  if (!b) return;
+  state.screen = screenInput.value = b.dataset.face;
+  facesEl.querySelectorAll(".face").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  draw();
+});
+$("#cap-top").addEventListener("input", (e) => { state.top = e.target.value; draw(); });
+$("#cap-bottom").addEventListener("input", (e) => { state.bottom = e.target.value; draw(); });
+swatchesEl.addEventListener("click", (e) => {
+  const b = e.target.closest(".swatch");
+  if (!b) return;
+  state.bg = BACKGROUNDS[Number(b.dataset.bg)];
+  swatchesEl.querySelectorAll(".swatch").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  draw();
+});
+
+const statusEl = $("#gen-status");
+function fileSlug() {
+  const s = `${state.screen} ${state.top}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 32);
+  return s || "screen";
+}
+$("#download").addEventListener("click", () => {
+  canvas.toBlob((blob) => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `tek-${fileSlug()}.png`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    statusEl.textContent = `Downloaded ${a.download}.`;
+  }, "image/png");
+});
+$("#copy-img").addEventListener("click", async () => {
+  try {
+    const blob = await new Promise((res) => canvas.toBlob(res, "image/png"));
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+    statusEl.textContent = "Image copied. Paste it straight into a post.";
+  } catch {
+    statusEl.textContent = "This browser won't copy images. Use Download PNG instead.";
+  }
+});
+$("#post-x").addEventListener("click", () => { statusEl.textContent = "Attach the image you downloaded or copied, then post."; });
+
+Promise.all([TEKRender.loadUnit(), TEKRender.loadFonts()]).then(() => { ready = true; draw(); });
+</script>
+</body>
+</html>
