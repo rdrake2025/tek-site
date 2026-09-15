@@ -228,6 +228,11 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
   .check { grid-template-columns: auto minmax(0, 1fr); }
   .check .state { grid-column: 2; white-space: normal; }
 }
+@media (max-width: 400px) {
+  .top .wrap { gap: .6rem; }
+  .top .badge { font-size: .95rem; padding: .1rem .45rem; }
+  .top .key { font-size: .8rem; padding-inline: .6rem; white-space: nowrap; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .key { transition: none; }
