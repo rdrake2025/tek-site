@@ -426,10 +426,19 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
   </div>
 </footer>
 
-<script src="config.js"></script>
 <script src="tek-render.js"></script>
-<script>
-const CFG = Object.assign({ ticker: "$TEK", contract: "", launchISO: "", roadmap: [] }, window.TEK);
+<script type="module">
+// GitHub Pages tells browsers to reuse files for 10 minutes. The launch-day contract must
+// never be stale, so config.js is always fetched fresh. If it fails, the page stays in its
+// safe "posts at launch" state rather than showing anything wrong.
+await new Promise((resolve) => {
+  const s = document.createElement("script");
+  s.src = `config.js?v=${Date.now()}`;
+  s.onload = s.onerror = resolve;
+  document.head.appendChild(s);
+});
+
+const CFG =Object.assign({ ticker: "$TEK", contract: "", launchISO: "", roadmap: [] }, window.TEK);
 CFG.links = Object.assign({}, CFG.links);
 CFG.wallets = Object.assign({}, CFG.wallets);
 
