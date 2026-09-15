@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TEK — sit. stay. ship.</title>
-<meta name="description" content="TEK is a robot dog and a Solana meme coin with a build log. It fetches, it ships, and it isn't allowed on the rug.">
-<meta property="og:title" content="TEK — sit. stay. ship.">
+<title>PetTek — sit. stay. ship.</title>
+<meta name="description" content="PetTek ($PETTEK) is a Solana meme coin starring TEK, a robot dog with a build log. It fetches, it ships, and it isn't allowed on the rug.">
+<meta property="og:title" content="PetTek ($PETTEK) — sit. stay. ship.">
 <meta property="og:description" content="A robot dog meme coin with a build log. Make a TEK meme, run the checks, read the changelog.">
 <meta property="og:image" content="https://tek.gimmiepets.com/og-image.png">
 <meta property="og:url" content="https://tek.gimmiepets.com/">
@@ -238,7 +238,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
 
 <header class="top">
   <div class="wrap">
-    <a class="badge" href="#top" aria-label="TEK home">TEK</a>
+    <a class="badge" href="#top" aria-label="PetTek home">PetTek</a>
     <nav aria-label="Sections">
       <a href="#lore">Lore</a>
       <a href="#screen">Make a meme</a>
@@ -256,7 +256,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
   <div class="wrap">
     <div>
       <h1>Sit. Stay. Ship.</h1>
-      <p class="lede">TEK is a robot dog and a Solana meme coin with a build log. It fetches, it ships, and it isn't allowed on the rug.</p>
+      <p class="lede">TEK is a robot dog, and $PETTEK is its Solana meme coin with a build log. TEK fetches, ships, and isn't allowed on the rug.</p>
 
       <div class="slot">
         <span class="slot-label" id="ca-label">Contract address</span>
@@ -366,9 +366,9 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
       <p class="sub">Everything about the token, on one tag. No presale, no team allocation, no tax.</p>
     </div>
     <div class="label" role="group" aria-label="Token details">
-      <div class="label-head"><strong>TEK-01</strong><span>Solana SPL token</span></div>
+      <div class="label-head"><strong>PetTek</strong><span>Solana SPL token</span></div>
       <dl>
-        <dt>Ticker</dt><dd data-ticker>$TEK</dd>
+        <dt>Ticker</dt><dd data-ticker>$PETTEK</dd>
         <dt>Supply</dt><dd>1,000,000,000</dd>
         <dt>Launch</dt><dd>Fair launch on pump.fun. Everyone buys from the same curve.</dd>
         <dt>Presale</dt><dd>None</dd>
@@ -402,12 +402,12 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
 <section class="panel" id="buy">
   <div class="wrap">
     <h2>How to buy</h2>
-    <p class="sub">Four steps. Nobody from TEK will ever ask for your seed phrase or DM you first.</p>
+    <p class="sub">Four steps. Nobody from PetTek will ever ask for your seed phrase or DM you first.</p>
     <ol class="steps">
       <li><h3>Get a Solana wallet</h3><p>Phantom, Solflare or Backpack. Write the seed phrase on paper and never type it into a website.</p></li>
       <li><h3>Get some SOL</h3><p>Buy SOL on an exchange and send it to your wallet address.</p></li>
       <li><h3>Copy the contract</h3><p>Only from this page or the pinned post on TEK's X account. Look-alike coins will copy the name.</p></li>
-      <li><h3>Swap for TEK</h3><p>On pump.fun while the curve is filling, or on Jupiter after TEK graduates.</p></li>
+      <li><h3>Swap for PETTEK</h3><p>On pump.fun while the curve is filling, or on Jupiter after PETTEK graduates.</p></li>
     </ol>
   </div>
 </section>
@@ -417,9 +417,9 @@ p { margin: 0 0 1rem; max-width: var(--measure); }
 <footer class="foot">
   <div class="wrap">
     <div>
-      <span class="badge">TEK</span>
-      <p>TEK is a meme coin. It is not an investment, a share in a company, or a promise that anything will be worth anything. The changelog is a plan, not a guarantee. Nothing on this site is financial advice.</p>
-      <p>TEK's story starts in the GimmiePets stockroom, and GimmiePets sells pet gear. Buying TEK isn't a purchase from GimmiePets and gives you no rights in the shop.</p>
+      <span class="badge">PetTek</span>
+      <p>PetTek ($PETTEK) is a meme coin. It is not an investment, a share in a company, or a promise that anything will be worth anything. The changelog is a plan, not a guarantee. Nothing on this site is financial advice.</p>
+      <p>TEK's story starts in the GimmiePets stockroom, and GimmiePets sells pet gear. Buying PETTEK isn't a purchase from GimmiePets and gives you no rights in the shop.</p>
       <p>Admins never DM first. The only contract address is the one on this page and in the pinned post on X.</p>
     </div>
     <ul id="socials"></ul>
@@ -438,7 +438,7 @@ await new Promise((resolve) => {
   document.head.appendChild(s);
 });
 
-const CFG =Object.assign({ ticker: "$TEK", contract: "", launchISO: "", roadmap: [] }, window.TEK);
+const CFG = Object.assign({ ticker: "$PETTEK", contract: "", launchISO: "", roadmap: [] }, window.TEK);
 CFG.links = Object.assign({}, CFG.links);
 CFG.wallets = Object.assign({}, CFG.wallets);
 
@@ -446,7 +446,7 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const BASE58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 const ca = (CFG.contract || "").trim();
 const live = BASE58.test(ca);
-if (ca && !live) console.warn("TEK config: contract does not look like a Solana address, so it is not shown.");
+if (ca && !live) console.warn("Site config: contract does not look like a Solana address, so it is not shown.");
 
 const links = {
   pumpfun: CFG.links.pumpfun || (live ? `https://pump.fun/coin/${ca}` : ""),
@@ -469,7 +469,7 @@ const copyCa = $("#copy-ca");
 if (live) {
   caEl.textContent = ca;
 } else {
-  caEl.textContent = "Posts here at launch. Any address you see before then isn't TEK.";
+  caEl.textContent = "Posts here at launch. Any address you see before then isn't PETTEK.";
   caEl.classList.add("pending");
   copyCa.disabled = true;
 }
@@ -540,8 +540,8 @@ setInterval(tickClock, 20000);
 
 /* ---------- checks ---------- */
 const CHECKS = [
-  { name: "Mint authority", text: "Nobody can print more TEK.", link: links.solscan, via: "Solscan" },
-  { name: "Freeze authority", text: "Nobody can freeze the TEK in your wallet.", link: links.rugcheck, via: "RugCheck" },
+  { name: "Mint authority", text: "Nobody can print more PETTEK.", link: links.solscan, via: "Solscan" },
+  { name: "Freeze authority", text: "Nobody can freeze the PETTEK in your wallet.", link: links.rugcheck, via: "RugCheck" },
   { name: "Liquidity", text: "Bonding curve on pump.fun, then a pool on PumpSwap that the protocol holds, not the dev.", link: links.dexscreener, via: "DexScreener" },
   { name: "Dev buy", text: "Size and transaction posted within minutes of launch.", link: links.dev, via: "Solscan" },
   { name: "Dev lock", text: "The dev buy is locked on a public schedule anyone can read.", link: links.lock, via: "the lock contract" },
@@ -570,7 +570,7 @@ $("#log").innerHTML = CFG.roadmap.map((r) => `
 /* ---------- dictionary ---------- */
 const DICT = [
   [">_ woof", "Good morning.", true],
-  ["The Pack", "Anyone holding TEK."],
+  ["The Pack", "Anyone holding PETTEK."],
   ["The Kennel", "The Telegram."],
   ["Handlers", "The mods. They never DM first."],
   ["fetch()", "Go get something done.", true],

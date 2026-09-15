@@ -1,5 +1,5 @@
 /* =====================================================================
-   TEK SITE CONFIG: the only file you edit to run the site.
+   PETTEK SITE CONFIG: the only file you edit to run the site.
 
    Before launch: fill in links.x, links.telegram and launchISO.
    On launch day: from the tek-coin folder run
@@ -9,7 +9,7 @@
    Anything left empty shows a safe "posts at launch" state.
    ===================================================================== */
 window.TEK = {
-  ticker: "$TEK",
+  ticker: "$PETTEK",
   contract: "",                      // mint address; set on launch day
   launchISO: "",                     // e.g. "2026-10-01T16:00:00Z"; counts down before launch, uptime after
 
