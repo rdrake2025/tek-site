@@ -192,7 +192,8 @@ async function sniff(mint) {
   const liquidity = pair?.liquidity?.usd ?? report?.totalMarketLiquidity ?? null;
   const vol24 = pair?.volume?.h24 ?? null;
   const createdAt = pair?.pairCreatedAt ? Date.now() - pair.pairCreatedAt : null;
-  const holders = report?.totalHolders ?? null;
+  // RugCheck reports 0 before it has indexed holders; a live coin with 0 holders is "unknown", not zero.
+  const holders = report?.totalHolders ? report.totalHolders : null;
 
   if (report) {
     if (report.rugged) add("danger", "Marked as rugged", "RugCheck has this token flagged as already rugged.");
@@ -279,6 +280,7 @@ async function sniff(mint) {
         : "Old enough to have a record you can read.");
   }
   if (holders != null) add("info", holders.toLocaleString() + " holders", holders < 50 ? "Very few people hold this." : "");
+  else if (report) add("info", "Holder count not indexed yet", "RugCheck hasn't counted holders for this coin yet.");
   if (errors.length) add("warn", "Couldn't check everything", errors.join(". ") + ". Missing checks count against a coin, never for it.");
 
   const dangers = f.filter((x) => x.level === "danger").length;
