@@ -36,7 +36,7 @@ window.TEK = {
     { ver: "v0.2", name: "The Kennel", status: "building", text: "Telegram opens with handlers and scam protection. First Friday patch notes. First treat bounty." },
     { ver: "v0.3", name: "Sniff", status: "shipped", text: "A free rug check on the site: paste any Solana coin and read what the chain says about it, in plain English. No wallet, no sign-up." },
     { ver: "v0.5", name: "Graduation", status: "planned", text: "Pool moves to PumpSwap. DexScreener, RugCheck and GeckoTerminal profiles filled in. A second unit joins the pack." },
-    { ver: "v1.0", name: "TEK Bot", status: "building", text: "A Telegram bot that sniffs out rugs: make TEK memes in chat, pull the contract, and check any Solana token." },
+    { ver: "v1.0", name: "TEK Bot", status: "building", text: "A Telegram bot that sniffs any Solana coin on command, in any group, and pulls the one real PETTEK contract when asked." },
     { ver: "v1.5", name: "Meme engine", status: "planned", text: "Animated screens, more stickers and a community gallery." },
     { ver: "v2.0", name: "Pack perks", status: "planned", text: "Perks for holders: early tool access, bot features and merch drops." },
     { ver: "v3.0", name: "Merch", status: "planned", text: "TEK plush, collar tags and keycaps. Hackathon side-prizes for projects that actually ship." },
