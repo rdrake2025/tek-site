@@ -225,6 +225,8 @@ async function sniff(mint) {
           "The most valuable is worth about " + usd(best) + " now." +
           (n >= 10 ? " Wallets that launch this many usually move on fast." : ""));
       }
+    } else {
+      add("info", "Creator history not available", "RugCheck didn't return the creator's other coins this time. Try again in a minute; missing history is not a clean record.");
     }
 
     const known = report.knownAccounts || {};
