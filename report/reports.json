@@ -1,0 +1,40 @@
+[
+  {
+    "stamp": "2026-09-16-14-31",
+    "image": "2026-09-16-14-31.png",
+    "at": "2026-09-16T14:31:17.967Z",
+    "launches": 718,
+    "windowMin": 30,
+    "perMinute": 24,
+    "creators": 338,
+    "repeatCreators": 94,
+    "maxByOneWallet": 68,
+    "fromRepeatPct": 66,
+    "agedCount": 490,
+    "quietPct": 45,
+    "under5kPct": 92,
+    "rugcheckSampled": 40,
+    "creatorRugs": 9,
+    "copycat": 2,
+    "anyDanger": 9
+  },
+  {
+    "stamp": "2026-09-16-14-25",
+    "image": "2026-09-16-14-25.png",
+    "at": "2026-09-16T14:25:11.466Z",
+    "launches": 717,
+    "windowMin": 30,
+    "perMinute": 23.8,
+    "creators": 356,
+    "repeatCreators": 85,
+    "maxByOneWallet": 54,
+    "fromRepeatPct": 62,
+    "agedCount": 487,
+    "quietPct": 38,
+    "under5kPct": 91,
+    "rugcheckSampled": 40,
+    "creatorRugs": 15,
+    "copycat": 1,
+    "anyDanger": 15
+  }
+]
