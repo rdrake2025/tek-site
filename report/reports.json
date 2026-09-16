@@ -1,5 +1,24 @@
 [
   {
+    "stamp": "2026-09-16-14-40",
+    "image": "2026-09-16-14-40.png",
+    "at": "2026-09-16T14:40:45.900Z",
+    "launches": 717,
+    "windowMin": 29,
+    "perMinute": 24.5,
+    "creators": 371,
+    "repeatCreators": 100,
+    "maxByOneWallet": 52,
+    "fromRepeatPct": 62,
+    "agedCount": 479,
+    "quietPct": 44,
+    "under5kPct": 91,
+    "rugcheckSampled": 40,
+    "creatorRugs": 10,
+    "copycat": 1,
+    "anyDanger": 11
+  },
+  {
     "stamp": "2026-09-16-14-31",
     "image": "2026-09-16-14-31.png",
     "at": "2026-09-16T14:31:17.967Z",
