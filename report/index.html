@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rug report — PetTek</title>
+<meta name="description" content="What launching a coin on pump.fun looks like right now: how many launch, how many come from the same wallets, how many go quiet in a minute. Aggregate numbers, no coin named.">
+<meta property="og:title" content="TEK rug report">
+<meta property="og:description" content="The latest pump.fun launches, counted. No coin named, just the patterns.">
+<meta property="og:image" content="https://tek.gimmiepets.com/report/latest.png">
+<meta property="og:url" content="https://tek.gimmiepets.com/report/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tek.gimmiepets.com/report/latest.png">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root {
+  --putty: #CFC6B0; --putty-hi: #E6DFCD; --putty-lo: #B8AE96; --ink: #2B2A26; --ink-soft: #4E4A42;
+  --glass: #15130E; --phosphor: #FFB547; --signal: #43D46C; --fault: #E4472F;
+  --wide: "Archivo", "Arial Black", Arial, sans-serif; --crt: "VT323", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; background: var(--putty); color: var(--ink); font-family: var(--wide);
+  font-size: 1.0625rem; line-height: 1.55; -webkit-font-smoothing: antialiased;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+::selection { background: var(--phosphor); color: var(--glass); }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: min(1000px, 100% - 2.5rem); margin-inline: auto; }
+.top { border-bottom: 2px solid rgba(43,42,38,.22); background: rgba(207,198,176,.92); position: sticky; top: 0; z-index: 5; backdrop-filter: blur(8px); }
+.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 4.25rem; }
+.badge { display: inline-grid; place-items: center; padding: .15rem .7rem .2rem; background: var(--putty-hi); border: 3px solid var(--ink); border-radius: 6px; font-weight: 900; font-size: 1.1rem; text-decoration: none; font-variation-settings: "wdth" 125; box-shadow: 0 3px 0 var(--ink); }
+.top nav { margin-left: auto; display: flex; gap: 1.1rem; font-size: .95rem; font-weight: 600; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+main { padding-block: clamp(2rem, 5vw, 3.5rem) 4rem; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); font-variation-settings: "wdth" 125; font-weight: 850; line-height: .92; margin: 0 0 .6rem; }
+h2 { font-size: 1.5rem; font-variation-settings: "wdth" 118; font-weight: 820; margin: 2.75rem 0 .9rem; }
+p { margin: 0 0 1rem; max-width: 42rem; }
+.lede { color: var(--ink-soft); font-size: 1.15rem; }
+.card { border: 4px solid var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 8px 8px 0 var(--ink); background: var(--putty-hi); margin-top: 1.5rem; }
+.meta { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; align-items: center; margin-top: 1.4rem; }
+.meta .when { font-family: var(--crt); font-size: 1.35rem; }
+.key { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .55rem 1.1rem; border-radius: 10px; font: inherit; font-weight: 750; font-variation-settings: "wdth" 110; border: 3px solid var(--ink); text-decoration: none; background: var(--ink); color: var(--putty-hi); box-shadow: 0 4px 0 #0F0E0C; }
+.key.light { background: var(--putty-hi); color: var(--ink); box-shadow: 0 4px 0 var(--ink); }
+.method { border-left: 4px solid var(--ink); padding: .2rem 0 .2rem 1rem; color: var(--ink-soft); }
+.table-scroll { overflow-x: auto; border: 3px solid var(--ink); border-radius: 12px; background: var(--putty-hi); }
+table { width: 100%; border-collapse: collapse; font-size: .98rem; }
+th, td { text-align: left; padding: .7rem 1rem; white-space: nowrap; }
+th { font-size: .85rem; color: var(--ink-soft); font-weight: 700; border-bottom: 2px solid rgba(43,42,38,.25); }
+td { border-top: 1px solid rgba(43,42,38,.14); font-variant-numeric: tabular-nums; }
+td.when { font-family: var(--crt); font-size: 1.2rem; }
+.empty { background: var(--glass); color: var(--phosphor); font-family: var(--crt); font-size: 1.3rem; border: 5px solid #4A463C; outline: 3px solid var(--ink); border-radius: 14px; padding: 1.2rem 1.4rem; margin-top: 1.5rem; }
+.foot { background: var(--ink); color: #D9D1BD; padding-block: 2.5rem; font-size: .95rem; }
+.foot a { color: var(--putty-hi); }
+.foot p { max-width: 50rem; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="badge" href="../">PetTek</a>
+    <nav>
+      <a href="../sniff/">Sniff a coin</a>
+      <a href="../#checks">PetTek's checks</a>
+      <a href="../">Home</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Rug report.</h1>
+    <p class="lede">TEK samples the latest pump.fun launches and counts what it finds: how many launch, how many come from the same few wallets, how many go quiet within a minute. No coin is named. This is just what launching looks like right now.</p>
+
+    <div id="latest"></div>
+
+    <h2>How it's counted</h2>
+    <p class="method">Each run takes the most recent launches from pump.fun's public feed, usually around half an hour's worth, and checks a spread of 40 of them on RugCheck. "Went quiet" only counts coins older than ten minutes. A creator flag is RugCheck's label, not proof about any single coin. Numbers move a lot from run to run, so read each one as a snapshot.</p>
+
+    <h2>Earlier runs</h2>
+    <div id="archive"></div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Made by <a href="../">PetTek</a>. Data from pump.fun's public launch feed and <a href="https://rugcheck.xyz" target="_blank" rel="noopener noreferrer">RugCheck</a>. Check any single coin with <a href="../sniff/">the sniffer</a>.</p>
+    <p>Aggregate numbers only. Nothing here is financial advice, and meme coins go to zero all the time, PETTEK included.</p>
+  </div>
+</footer>
+
+<script type="module">
+const $ = (s) => document.querySelector(s);
+const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const when = (iso) => {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }) + ", " + d.toISOString().slice(11, 16) + " UTC";
+};
+
+let reports = [];
+try {
+  const res = await fetch("reports.json?v=" + Date.now(), { cache: "no-store" });
+  if (res.ok) reports = await res.json();
+} catch { /* empty state below */ }
+
+if (!reports.length) {
+  $("#latest").innerHTML = '<div class="empty">&gt; no report published yet.<br>&gt; the first one posts here soon.</div>';
+  $("#archive").innerHTML = "<p>Nothing yet.</p>";
+} else {
+  const r = reports[0];
+  const tweet = "TEK rug report: " + r.launches + " new coins on pump.fun in " + r.windowMin + " minutes, and 1 wallet launched " + r.maxByOneWallet + " of them.\n\ntek.gimmiepets.com/report";
+  $("#latest").innerHTML =
+    '<div class="card"><img src="' + esc(r.image) + '" width="1200" height="675" alt="TEK rug report card: ' +
+      esc(r.launches) + " launches in " + esc(r.windowMin) + " minutes, one wallet launched " + esc(r.maxByOneWallet) + '"></div>' +
+    '<div class="meta"><span class="when">' + esc(when(r.at)) + "</span>" +
+      '<a class="key" href="https://x.com/intent/tweet?text=' + encodeURIComponent(tweet) + '" target="_blank" rel="noopener noreferrer">Post this</a>' +
+      '<a class="key light" href="../sniff/">Sniff a coin</a></div>';
+
+  const rows = reports.map((x) =>
+    "<tr><td class=\"when\"><a href=\"" + esc(x.image) + "\">" + esc(when(x.at)) + "</a></td>" +
+    "<td>" + esc(x.launches) + " in " + esc(x.windowMin) + " min</td>" +
+    "<td>" + esc(x.maxByOneWallet) + "</td>" +
+    "<td>" + esc(x.fromRepeatPct) + "%</td>" +
+    "<td>" + (x.quietPct == null ? "—" : esc(x.quietPct) + "%") + "</td>" +
+    "<td>" + (x.rugcheckSampled ? esc(x.creatorRugs) + " of " + esc(x.rugcheckSampled) : "—") + "</td></tr>").join("");
+  $("#archive").innerHTML = '<div class="table-scroll"><table>' +
+    "<thead><tr><th>Run</th><th>Launches</th><th>Most by one wallet</th><th>From repeat launchers</th><th>Went quiet</th><th>Creator flagged</th></tr></thead>" +
+    "<tbody>" + rows + "</tbody></table></div>";
+}
+</script>
+</body>
+</html>

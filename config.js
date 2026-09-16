@@ -35,6 +35,7 @@ window.TEK = {
     { ver: "v0.1", name: "Boot", status: "building", text: "Fair launch on pump.fun. This site, the meme generator and a sticker pack. Every wallet published." },
     { ver: "v0.2", name: "The Kennel", status: "building", text: "Telegram opens with handlers and scam protection. First Friday patch notes. First treat bounty." },
     { ver: "v0.3", name: "Sniff", status: "shipped", text: "A free rug check on the site: paste any Solana coin and read what the chain says about it, in plain English. No wallet, no sign-up." },
+    { ver: "v0.4", name: "Rug report", status: "shipped", text: "TEK samples the latest pump.fun launches and publishes what it finds: how many launch, how many come from the same wallets, how many go quiet. No coin named." },
     { ver: "v0.5", name: "Graduation", status: "planned", text: "Pool moves to PumpSwap. DexScreener, RugCheck and GeckoTerminal profiles filled in. A second unit joins the pack." },
     { ver: "v1.0", name: "TEK Bot", status: "building", text: "A Telegram bot that sniffs any Solana coin on command, in any group, and pulls the one real PETTEK contract when asked." },
     { ver: "v1.5", name: "Meme engine", status: "planned", text: "Animated screens, more stickers and a community gallery." },

@@ -86,6 +86,7 @@ ul.findings { list-style: none; margin: 0; padding: 0; border: 3px solid var(--i
   <div class="wrap">
     <a class="badge" href="../">PetTek</a>
     <nav>
+      <a href="../report/">Rug report</a>
       <a href="../#screen">Make a meme</a>
       <a href="../#checks">PetTek's checks</a>
       <a href="../">Home</a>
@@ -116,6 +117,7 @@ ul.findings { list-style: none; margin: 0; padding: 0; border: 3px solid var(--i
       <ul class="findings">
         <li class="finding"><span class="dot info"></span><div><b>Mint and freeze authority</b><p>Whether anyone can still print more of the coin, or freeze it in your wallet.</p></div></li>
         <li class="finding"><span class="dot info"></span><div><b>Who holds it</b><p>The biggest wallets, how much of the supply they sit on, and whether the creator still holds a pile.</p></div></li>
+        <li class="finding"><span class="dot info"></span><div><b>Who made it</b><p>How many other coins the creator has launched, how many in the last day, and what the best of them is worth now. Some wallets launch fifty a day.</p></div></li>
         <li class="finding"><span class="dot info"></span><div><b>The pool</b><p>How much liquidity is actually behind it, and whether the pool tokens are locked or sitting in someone's wallet.</p></div></li>
         <li class="finding"><span class="dot info"></span><div><b>Volume against liquidity</b><p>Volume many times deeper than the pool usually means the same wallets trading with each other.</p></div></li>
         <li class="finding"><span class="dot info"></span><div><b>Age</b><p>A coin minutes old has almost nothing to analyse, and this page says so instead of calling it clean.</p></div></li>
@@ -207,6 +209,24 @@ async function sniff(mint) {
           : creatorPct > 5 ? "A noticeable stake in one hand. Watch that wallet."
           : "A small stake, which is normal. It can still be sold at any time.");
     }
+    // Serial launchers: RugCheck lists the creator's other coins (excluding this one, capped at 50).
+    if (Array.isArray(report.creatorTokens)) {
+      const others = report.creatorTokens;
+      const n = others.length;
+      const label = n >= 50 ? "50+" : String(n);
+      const lastDay = others.filter((t) => t.createdAt && Date.now() - Date.parse(t.createdAt) < 86400000).length;
+      const best = others.reduce((m, t) => Math.max(m, Number(t.marketCap) || 0), 0);
+      if (n === 0) {
+        add("info", "First coin from this wallet", "No launch history, so there is nothing to judge the creator by.");
+      } else {
+        add(n >= 10 ? "danger" : n >= 3 ? "warn" : "info",
+          "Creator launched " + label + " other coin" + (n === 1 ? "" : "s"),
+          (lastDay ? lastDay + (n >= 50 && lastDay >= 50 ? "+" : "") + " of them in the last 24 hours. " : "") +
+          "The most valuable is worth about " + usd(best) + " now." +
+          (n >= 10 ? " Wallets that launch this many usually move on fast." : ""));
+      }
+    }
+
     const known = report.knownAccounts || {};
     const isPool = (h) => ["AMM", "POOL", "LOCKER", "VAULT"].includes((known[h.owner] || {}).type || "");
     const top = (report.topHolders || []);
