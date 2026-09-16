@@ -224,7 +224,7 @@ async function sniff(mint) {
           : "No single wallet dominates what is actually circulating. Pools are excluded from this number.");
     }
     if (report.graphInsidersDetected) {
-      add("warn", report.graphInsidersDetected + " connected wallets detected", "RugCheck thinks this many wallets are linked to each other. Clusters like that are often one person.");
+      add("warn", Number(report.graphInsidersDetected).toLocaleString("en-US") + " connected wallets detected", "RugCheck thinks this many wallets are linked to each other. Clusters like that are often one person.");
     }
     if (report.launchpad && report.launchpad.name) add("info", "Launched on " + report.launchpad.name, "");
     const market = (report.markets || [])[0];
